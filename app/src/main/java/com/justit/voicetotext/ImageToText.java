@@ -1,55 +1,31 @@
 package com.justit.voicetotext;
 
-import static android.app.Activity.RESULT_OK;
-
-import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import android.Manifest;
-import android.content.ClipData;
-import android.content.ClipboardManager;
-import android.content.ContentValues;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
-import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
-import android.util.Log;
-import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdSize;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.interstitial.InterstitialAd;
-import com.google.android.gms.vision.Frame;
-import com.google.android.gms.vision.text.TextBlock;
-import com.google.android.gms.vision.text.TextRecognizer;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
-import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
-
 public class ImageToText extends Fragment {
 
-    SimpleDateFormat sdf = new SimpleDateFormat("h:mm a  MMM d, yyyy", Locale.getDefault());
-    String currentDateandTime = sdf.format(new Date());
-
-    private ImageView take, copy, retake, history, share;
+    private ImageView retake, share;
     private TextView textView;
     private static final int REQUEST_CAMERA_CODE = 100;
     Bitmap bitmap;
@@ -80,7 +56,6 @@ public class ImageToText extends Fragment {
 //        history = view.findViewById(R.id.historyid);
         db = new Database(getActivity());
 
-
         MobileAds.initialize(getActivity());
         AdRequest adRequest = new AdRequest.Builder().build();
         AdView adView = new AdView(getActivity());
@@ -110,14 +85,11 @@ public class ImageToText extends Fragment {
 //                    }
 //                });
 
-
-        if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED)
-            ;
+        if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) ;
         {
             ActivityCompat.requestPermissions(getActivity(),
                     new String[]{Manifest.permission.CAMERA}, REQUEST_CAMERA_CODE);
         }
-
 
         retake.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -153,7 +125,6 @@ public class ImageToText extends Fragment {
 //            }
 //        });
 
-
         share.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -167,10 +138,8 @@ public class ImageToText extends Fragment {
             }
         });
 
-
         return view;
     }
-
 
 //    @Override
 //    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -216,13 +185,10 @@ public class ImageToText extends Fragment {
 //            share.setVisibility(View.VISIBLE);
 //        }
 //    }
-//
+
     String cropedText;
 
     public void setImageText(String theText) {
         cropedText = theText;
     }
-
-
-
 }

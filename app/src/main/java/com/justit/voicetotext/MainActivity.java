@@ -12,20 +12,17 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-
 import com.google.android.gms.vision.Frame;
 import com.google.android.gms.vision.text.TextBlock;
 import com.google.android.gms.vision.text.TextRecognizer;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
-
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -134,7 +131,6 @@ public class MainActivity extends AppCompatActivity {
             ImageToText imageToText = new ImageToText();
             imageToText.setImageText(stringBuilder.toString());
 
-
             Database db = new Database(this);
             SimpleDateFormat sdf = new SimpleDateFormat("h:mm a  MMM d, yyyy", Locale.getDefault());
             String currentDateandTime = sdf.format(new Date());
@@ -145,11 +141,10 @@ public class MainActivity extends AppCompatActivity {
             SQLiteDatabase sqLiteDatabase = db.getWritableDatabase();
 
             sqLiteDatabase.insert("info", null, contentValues);
-
             selectedFragment = imageToText;
+
             getSupportFragmentManager().beginTransaction().
                     replace(R.id.fragment_container, selectedFragment).commit();
-
         }
     }
 }

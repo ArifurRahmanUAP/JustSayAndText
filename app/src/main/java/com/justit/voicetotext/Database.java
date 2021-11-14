@@ -1,13 +1,11 @@
 package com.justit.voicetotext;
 
-
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.widget.Toast;
 
-
-public class Database  extends SQLiteOpenHelper {
+public class Database extends SQLiteOpenHelper {
 
     public static final int dbversion = 18;
     public static final String dbname = "Data.db";
@@ -17,13 +15,12 @@ public class Database  extends SQLiteOpenHelper {
     public static final String DATA = "data";
     public static final String DATE = "date";
 
-    public static final String Create_Table = ("create table " + TABLE_NAME + " ( " + ID + " INTEGER PRIMARY KEY ," + TYPE + ", " + DATA + ", "+ DATE + ")");
+    public static final String Create_Table = ("create table " + TABLE_NAME + " ( " + ID + " INTEGER PRIMARY KEY ," + TYPE + ", " + DATA + ", " + DATE + ")");
     private final Context context;
 
     public Database(Context context) {
         super(context, dbname, null, dbversion);
         this.context = context;
-
     }
 
     @Override
@@ -44,5 +41,4 @@ public class Database  extends SQLiteOpenHelper {
             Toast.makeText(context, "Exception: " + e, Toast.LENGTH_SHORT).show();
         }
     }
-
 }

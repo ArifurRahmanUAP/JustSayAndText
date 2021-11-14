@@ -47,11 +47,8 @@ public class UpdateData extends AppCompatActivity {
         textEdit.setText(text);
         dateEdit.setText(date);
 
-
         AdView adView = new AdView(this);
-
         adView.setAdSize(AdSize.BANNER);
-
         adView.setAdUnitId("ca-app-pub-7148413509095909/1143566527");
 
         MobileAds.initialize(this, new OnInitializationCompleteListener() {
@@ -63,7 +60,6 @@ public class UpdateData extends AppCompatActivity {
         mAdView = findViewById(R.id.adView1);
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
-
 
         edit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -80,25 +76,18 @@ public class UpdateData extends AppCompatActivity {
                                 contentValues.put(Database.DATE, dateEdit.getText().toString());
                                 contentValues.put(Database.DATA, textEdit.getText().toString());
                                 Log.d("dateEdit", dateEdit.getText().toString());
-
-
                                 sqLiteDatabase = database.getWritableDatabase();
                                 long recid = sqLiteDatabase.update("info", contentValues, "data=?", new String[]{text});
                                 if (recid != -1) {
                                     Toast.makeText(UpdateData.this, "Data update successfully", Toast.LENGTH_SHORT).show();
-
                                 } else {
-
                                     Toast.makeText(UpdateData.this, "Something wrong try again", Toast.LENGTH_SHORT).show();
                                 }
-
                                 Intent i = new Intent(UpdateData.this, History.class);
                                 startActivity(i);
                             }
-
                         }).create().show();
             }
-
         });
     }
 }

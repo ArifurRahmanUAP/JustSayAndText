@@ -2,7 +2,6 @@ package com.justit.voicetotext;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
-
 import android.annotation.SuppressLint;
 import android.content.ClipData;
 import android.content.ClipboardManager;
@@ -50,29 +49,27 @@ public class History extends Fragment {
 
     private void displayData() {
 
-        sqLiteDatabase=database.getReadableDatabase();
-        Cursor cursor = sqLiteDatabase.rawQuery("select *from info",null);
-        if(cursor.getCount()>0){
+        sqLiteDatabase = database.getReadableDatabase();
+        Cursor cursor = sqLiteDatabase.rawQuery("select *from info", null);
+        if (cursor.getCount() > 0) {
             id = new int[cursor.getCount()];
             text = new String[cursor.getCount()];
             date = new String[cursor.getCount()];
 
-            int i=0;
-            while (cursor.moveToNext()){
-                id[i]=cursor.getInt(0);
-                text[i]=cursor.getString(2);
-                date[i]=cursor.getString(3);
+            int i = 0;
+            while (cursor.moveToNext()) {
+                id[i] = cursor.getInt(0);
+                text[i] = cursor.getString(2);
+                date[i] = cursor.getString(3);
                 i++;
             }
-            Custom adapter=new Custom();
+            Custom adapter = new Custom();
             listView.setAdapter(adapter);
 
-        }
-        else if (cursor.getCount()==0)
-        {
+        } else if (cursor.getCount() == 0) {
             empty.setVisibility(View.VISIBLE);
             listView.setVisibility(View.GONE);
-            Toast.makeText(getContext(),"Empty",Toast.LENGTH_LONG).show();
+            Toast.makeText(getContext(), "Empty", Toast.LENGTH_LONG).show();
         }
 
         listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
@@ -84,15 +81,14 @@ public class History extends Fragment {
                 return true;
             }
         });
-
     }
-    private void copytoClip(String text)
-    {
+
+    private void copytoClip(String text) {
         ClipboardManager clipBoard = (ClipboardManager) getActivity().getSystemService(Context.CLIPBOARD_SERVICE);
-        ClipData clip = ClipData.newPlainText("Copied Data",text);
+        ClipData clip = ClipData.newPlainText("Copied Data", text);
         clipBoard.setPrimaryClip(clip);
 
-        Toast.makeText(getContext(),"Copied",Toast.LENGTH_SHORT).show();
+        Toast.makeText(getContext(), "Copied", Toast.LENGTH_SHORT).show();
     }
 
     private class Custom extends BaseAdapter {
@@ -115,9 +111,9 @@ public class History extends Fragment {
         @SuppressLint("ViewHolder")
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-            ImageView delete, edit , share;
-            TextView  textView1, textView;
-            convertView = LayoutInflater.from(getContext()).inflate(R.layout.sample_view,parent,false);
+            ImageView delete, edit, share;
+            TextView textView1, textView;
+            convertView = LayoutInflater.from(getContext()).inflate(R.layout.sample_view, parent, false);
             delete = convertView.findViewById(R.id.delete);
             share = convertView.findViewById(R.id.share);
             edit = convertView.findViewById(R.id.edit);
@@ -125,7 +121,6 @@ public class History extends Fragment {
             textView1 = convertView.findViewById(R.id.textview_date);
             textView.setText(text[position]);
             textView1.setText(date[position]);
-
 
             delete.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -137,9 +132,9 @@ public class History extends Fragment {
                             .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
 
                                 public void onClick(DialogInterface arg0, int arg1) {
-                                    sqLiteDatabase= database.getWritableDatabase();
-                                    long recd = sqLiteDatabase.delete("info","id="+id[position],null);
-                                    if (recd!=1){
+                                    sqLiteDatabase = database.getWritableDatabase();
+                                    long recd = sqLiteDatabase.delete("info", "id=" + id[position], null);
+                                    if (recd != 1) {
                                         Toast.makeText(getContext(), "Record deleted successfully", Toast.LENGTH_SHORT).show();
                                     }
                                     displayData();
@@ -153,11 +148,10 @@ public class History extends Fragment {
                 public void onClick(View v) {
 
                     Intent intent = new Intent(getActivity(), UpdateData.class);
-                    intent.putExtra("id",id[position]);
+                    intent.putExtra("id", id[position]);
                     intent.putExtra("text", text[position]);
-                    intent.putExtra("date",date[position]);
+                    intent.putExtra("date", date[position]);
                     startActivity(intent);
-
                 }
             });
 
@@ -178,5 +172,4 @@ public class History extends Fragment {
             return convertView;
         }
     }
-
 }

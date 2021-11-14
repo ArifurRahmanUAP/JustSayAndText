@@ -49,22 +49,21 @@ public class JustSay extends Fragment {
     private static final int RESULT_OK = -1;
     InterstitialAd mInterstitialAd;
     private CheckBox checkBoxId;
-    private Spinner fromSpinner, toSpinner, voiceLanguagespinner;
+    private Spinner fromSpinner, toSpinner;
     private TextInputEditText sourceEdt, translateTv;
-    private ImageView mic, sourseTexeShare, translatedTexeShare, fromSpeech, toSpeech, appShare;
+    private ImageView mic, sourseTexeShare, translatedTexeShare;
     private MaterialButton translateBtn;
     String languageCode = "0";
     public AdView mAdView;
-
     private static final int REQUEST_PERMISSION_CODE = 0;
     int fromLanguageCode, toLanguageCode = 0;
     String voiceLanguageCode;
 
     String[] fromLanguages = {"English", "Bengali", "Hindi", "Urdu", "Philippine", "Afrikaans", "Arabic", "Korean", "Japanese",
-            "Catalan", "Spanish", "Swedish"};
+            "Catalan", "Spanish", "Swedish", "Chinese", "Danish", "German", "Dutch", "Greek", "French", "Indonesian", "Italian"};
 
-    String[] toLanguages = {"Bengali", "English", "Hindi", "Urdu", "Afrikaans", "Arabic", "Korean", "Japanese",
-            "Catalan", "Spanish", "Swedish"};
+    String[] toLanguages = {"Bengali", "English", "Hindi", "Urdu", "Philippine", "Afrikaans", "Arabic", "Korean", "Japanese",
+            "Catalan", "Spanish", "Swedish", "Chinese", "Danish", "German", "Dutch", "Greek", "French", "Indonesian", "Italian"};
 
     public JustSay() {
         // Required empty public constructor
@@ -95,7 +94,6 @@ public class JustSay extends Fragment {
         adView.setAdUnitId("ca-app-pub-4459566286777302/7966254460");
         mAdView = view.findViewById(R.id.adView);
         mAdView.loadAd(adRequest);
-
 
         fromSpinner = view.findViewById(R.id.idFromSpinner);
         toSpinner = view.findViewById(R.id.idToSpinner);
@@ -304,6 +302,46 @@ public class JustSay extends Fragment {
                 selectedLanguage = FirebaseTranslateLanguage.BN;
                 break;
 
+            case "Chinese":
+                languageCode = "zh";
+                selectedLanguage = FirebaseTranslateLanguage.ZH;
+                break;
+
+            case "Danish":
+                languageCode = "da";
+                selectedLanguage = FirebaseTranslateLanguage.DA;
+                break;
+
+            case "German":
+                languageCode = "de";
+                selectedLanguage = FirebaseTranslateLanguage.DE;
+                break;
+
+            case "Dutch":
+                languageCode = "nl";
+                selectedLanguage = FirebaseTranslateLanguage.NL;
+                break;
+
+            case "Greek":
+                languageCode = "el";
+                selectedLanguage = FirebaseTranslateLanguage.EL;
+                break;
+
+            case "French":
+                languageCode = "fr";
+                selectedLanguage = FirebaseTranslateLanguage.FR;
+                break;
+
+            case "Indonesian":
+                languageCode = "id";
+                selectedLanguage = FirebaseTranslateLanguage.ID;
+                break;
+
+            case "Italian":
+                languageCode = "it";
+                selectedLanguage = FirebaseTranslateLanguage.IT;
+                break;
+
             case "Hindi":
                 languageCode = "hi";
                 selectedLanguage = FirebaseTranslateLanguage.HI;
@@ -364,4 +402,3 @@ public class JustSay extends Fragment {
         return selectedLanguage;
     }
 }
-
