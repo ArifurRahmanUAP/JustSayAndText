@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.justit.voicetotext">
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.RECORD_AUDIO"/>
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.JustSay">
+
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="ca-app-pub-4459566286777302~6354963351"/>
+        <activity
+            android:name="com.justit.voicetotext.ImageToText"
+            android:exported="false"
+            tools:ignore="Instantiatable" />
+        <activity
+            android:name="com.justit.voicetotext.History"
+            android:exported="false"
+            tools:ignore="Instantiatable" />
+        <activity
+            android:name="com.justit.voicetotext.JustSay"
+            android:exported="false"
+            tools:ignore="Instantiatable" />
+        <activity
+            android:name="com.justit.voicetotext.MainActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
+
+</manifest>
