@@ -60,7 +60,6 @@ public class JustSay extends Fragment {
     int fromLanguageCode, toLanguageCode = 0;
     String voiceLanguageCode;
 
-
     String[] fromLanguages = {"English", "Bengali", "Hindi", "Urdu", "Philippine", "Afrikaans", "Arabic", "Korean", "Japanese",
             "Catalan", "Spanish", "Swedish"};
 
@@ -75,15 +74,13 @@ public class JustSay extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view =  inflater.inflate(R.layout.fragment_home, container, false);
+        View view = inflater.inflate(R.layout.fragment_justsay, container, false);
 
         MobileAds.initialize(requireContext());
 
         if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.RECORD_AUDIO}, 1);
         }
-
-
 
         //        Share
         sourseTexeShare = view.findViewById(R.id.sourseTexeShare);
@@ -105,13 +102,8 @@ public class JustSay extends Fragment {
         sourceEdt = view.findViewById(R.id.idEdtsource);
         mic = view.findViewById(R.id.idMic);
         checkBoxId = view.findViewById(R.id.checkBoxId);
-//        appShare = findViewById(R.id.appShare);
-
         translateBtn = view.findViewById(R.id.idBtnTranslate);
         translateTv = view.findViewById(R.id.idEdttranslated);
-
-
-
 
         fromSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -124,7 +116,6 @@ public class JustSay extends Fragment {
 
             }
         });
-
 
         ArrayAdapter fromAdapter = new ArrayAdapter(getActivity(), R.layout.spinner_item, fromLanguages);
         fromAdapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
@@ -153,11 +144,9 @@ public class JustSay extends Fragment {
                 sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
                 startActivity(Intent.createChooser(sharingIntent, "Share via"));
 
-
                 if (checkBoxId.isChecked()) {
                     sourceEdt.setText("");
                 }
-
             }
         });
 
@@ -206,7 +195,6 @@ public class JustSay extends Fragment {
             }
         });
 
-
         mic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -253,131 +241,127 @@ public class JustSay extends Fragment {
         return view;
     }
 
-
-        private void copytoClip(String text) {
-            ClipboardManager clipBoard = (ClipboardManager) getActivity().getSystemService(Context.CLIPBOARD_SERVICE);
-            ClipData clip = ClipData.newPlainText("Copied Data", text);
-            clipBoard.setPrimaryClip(clip);
-
-            Toast.makeText(getActivity(), "Copied", Toast.LENGTH_SHORT).show();
-        }
-
-        @Override
-        public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-            super.onActivityResult(requestCode, resultCode, data);
-            if (requestCode == REQUEST_PERMISSION_CODE && resultCode == RESULT_OK && data != null) {
-                ArrayList<String> result = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
-                sourceEdt.setText(result.get(0));
-            }
-        }
-
-        private void translateText(int fromLanguageCode, int toLanguageCode, String source) {
-            translateTv.setText("Translating..");
-            FirebaseTranslatorOptions options = new FirebaseTranslatorOptions.Builder()
-                    .setSourceLanguage(fromLanguageCode)
-                    .setTargetLanguage(toLanguageCode).build();
-
-            FirebaseTranslator translator = FirebaseNaturalLanguage.getInstance().getTranslator(options);
-
-            FirebaseModelDownloadConditions conditions = new FirebaseModelDownloadConditions.Builder().build();
-            translator.downloadModelIfNeeded(conditions).addOnSuccessListener(new OnSuccessListener<Void>() {
-                @Override
-                public void onSuccess(Void unused) {
-                    translateTv.setText("Translating...");
-                    translator.translate(source).addOnSuccessListener(new OnSuccessListener<String>() {
-                        @Override
-                        public void onSuccess(String s) {
-                            translateTv.setText(s);
-                        }
-                    }).addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            Toast.makeText(getActivity(), "Fail to translate:" + e.getMessage(), Toast.LENGTH_LONG).show();
-                        }
-                    });
-                }
-            }).addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-                    Toast.makeText(getActivity(), "Fail to download Language" + e.getMessage(), Toast.LENGTH_LONG).show();
-                }
-            });
-        }
-
-        private int getLanguageCode(String language, boolean isFromSpinner) {
-
-            int selectedLanguage = FirebaseTranslateLanguage.EN;
-            switch (language) {
-                case "English":
-                    languageCode = "en";
-                    selectedLanguage = FirebaseTranslateLanguage.EN;
-                    break;
-
-                case "Bengali":
-                    languageCode = "bn";
-                    selectedLanguage = FirebaseTranslateLanguage.BN;
-                    break;
-
-                case "Hindi":
-                    languageCode = "hi";
-                    selectedLanguage = FirebaseTranslateLanguage.HI;
-                    break;
-
-                case "Belarusian":
-                    languageCode = "be";
-                    selectedLanguage = FirebaseTranslateLanguage.BE;
-                    break;
-
-                case "Urdu":
-                    languageCode = "ur";
-                    selectedLanguage = FirebaseTranslateLanguage.UR;
-                    break;
-
-                case "Afrikaans":
-                    languageCode = "af";
-                    selectedLanguage = FirebaseTranslateLanguage.AF;
-                    break;
-
-                case "Arabic":
-                    languageCode = "ar";
-                    selectedLanguage = FirebaseTranslateLanguage.AR;
-                    break;
-
-                case "Korean":
-                    languageCode = "ko";
-                    selectedLanguage = FirebaseTranslateLanguage.KO;
-                    break;
-
-                case "Catalan":
-                    languageCode = "ca";
-                    selectedLanguage = FirebaseTranslateLanguage.CA;
-                    break;
-
-                case "Spanish":
-                    languageCode = "es";
-                    selectedLanguage = FirebaseTranslateLanguage.ES;
-                    break;
-
-                case "Japanese":
-                    languageCode = "ja";
-                    selectedLanguage = FirebaseTranslateLanguage.JA;
-                    break;
-
-                case "Swedish":
-                    languageCode = "sv";
-                    selectedLanguage = FirebaseTranslateLanguage.SV;
-                    break;
-
-                case "Philippine":
-                    languageCode = "fil";
-                    selectedLanguage = FirebaseTranslateLanguage.PL;
-                    break;
-            }
-            if (isFromSpinner)
-                voiceLanguageCode = languageCode;
-            return selectedLanguage;
-        }
-
-
+    private void copytoClip(String text) {
+        ClipboardManager clipBoard = (ClipboardManager) getActivity().getSystemService(Context.CLIPBOARD_SERVICE);
+        ClipData clip = ClipData.newPlainText("Copied Data", text);
+        clipBoard.setPrimaryClip(clip);
+        Toast.makeText(getActivity(), "Copied", Toast.LENGTH_SHORT).show();
     }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_PERMISSION_CODE && resultCode == RESULT_OK && data != null) {
+            ArrayList<String> result = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
+            sourceEdt.setText(result.get(0));
+        }
+    }
+
+    private void translateText(int fromLanguageCode, int toLanguageCode, String source) {
+        translateTv.setText("Translating..");
+        FirebaseTranslatorOptions options = new FirebaseTranslatorOptions.Builder()
+                .setSourceLanguage(fromLanguageCode)
+                .setTargetLanguage(toLanguageCode).build();
+
+        FirebaseTranslator translator = FirebaseNaturalLanguage.getInstance().getTranslator(options);
+
+        FirebaseModelDownloadConditions conditions = new FirebaseModelDownloadConditions.Builder().build();
+        translator.downloadModelIfNeeded(conditions).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void unused) {
+                translateTv.setText("Translating...");
+                translator.translate(source).addOnSuccessListener(new OnSuccessListener<String>() {
+                    @Override
+                    public void onSuccess(String s) {
+                        translateTv.setText(s);
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(getActivity(), "Fail to translate:" + e.getMessage(), Toast.LENGTH_LONG).show();
+                    }
+                });
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(getActivity(), "Fail to download Language" + e.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
+    private int getLanguageCode(String language, boolean isFromSpinner) {
+
+        int selectedLanguage = FirebaseTranslateLanguage.EN;
+        switch (language) {
+            case "English":
+                languageCode = "en";
+                selectedLanguage = FirebaseTranslateLanguage.EN;
+                break;
+
+            case "Bengali":
+                languageCode = "bn";
+                selectedLanguage = FirebaseTranslateLanguage.BN;
+                break;
+
+            case "Hindi":
+                languageCode = "hi";
+                selectedLanguage = FirebaseTranslateLanguage.HI;
+                break;
+
+            case "Belarusian":
+                languageCode = "be";
+                selectedLanguage = FirebaseTranslateLanguage.BE;
+                break;
+
+            case "Urdu":
+                languageCode = "ur";
+                selectedLanguage = FirebaseTranslateLanguage.UR;
+                break;
+
+            case "Afrikaans":
+                languageCode = "af";
+                selectedLanguage = FirebaseTranslateLanguage.AF;
+                break;
+
+            case "Arabic":
+                languageCode = "ar";
+                selectedLanguage = FirebaseTranslateLanguage.AR;
+                break;
+
+            case "Korean":
+                languageCode = "ko";
+                selectedLanguage = FirebaseTranslateLanguage.KO;
+                break;
+
+            case "Catalan":
+                languageCode = "ca";
+                selectedLanguage = FirebaseTranslateLanguage.CA;
+                break;
+
+            case "Spanish":
+                languageCode = "es";
+                selectedLanguage = FirebaseTranslateLanguage.ES;
+                break;
+
+            case "Japanese":
+                languageCode = "ja";
+                selectedLanguage = FirebaseTranslateLanguage.JA;
+                break;
+
+            case "Swedish":
+                languageCode = "sv";
+                selectedLanguage = FirebaseTranslateLanguage.SV;
+                break;
+
+            case "Philippine":
+                languageCode = "fil";
+                selectedLanguage = FirebaseTranslateLanguage.PL;
+                break;
+        }
+        if (isFromSpinner)
+            voiceLanguageCode = languageCode;
+        return selectedLanguage;
+    }
+}
 

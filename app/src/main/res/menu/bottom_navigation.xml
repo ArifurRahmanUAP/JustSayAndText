@@ -2,17 +2,17 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/nav_home"
-        android:title="Just Say"
+        android:id="@+id/nav_justSay"
+        android:title="@string/just_say"
         android:icon="@drawable/mic"/>
 
     <item
-        android:id="@+id/nav_favorites"
-        android:title="Image"
+        android:id="@+id/nav_imageToText"
+        android:title="@string/image_to_text"
         android:icon="@drawable/camera"/>
 
     <item
-        android:id="@+id/nav_search"
-        android:title="search"
+        android:id="@+id/nav_History"
+        android:title="@string/history"
         android:icon="@drawable/history"/>
 </menu>

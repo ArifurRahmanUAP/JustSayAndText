@@ -7,4 +7,7 @@
     <string name="say_something">Say Something</string>
     <string name="speak_here">Speak Here</string>
     <string name="clear_after_share">Clear After Share</string>
+    <string name="history">History</string>
+    <string name="just_say">Just Say</string>
+    <string name="image_to_text">Image to Text</string>
 </resources>

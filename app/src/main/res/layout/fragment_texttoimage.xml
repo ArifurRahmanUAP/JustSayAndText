@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:ads="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ImageToText"
+    android:orientation="vertical"
+    android:background="@color/black_shade_1"
+    android:padding="10dp">
+
+    <com.google.android.gms.ads.AdView
+        android:visibility="gone"
+        android:id="@+id/adView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        ads:adSize="BANNER"
+        ads:adUnitId="ca-app-pub-3940256099942544/6300978111"
+        tools:ignore="NotSibling" />
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:overScrollMode="ifContentScrolls"
+        android:verticalScrollbarPosition="defaultPosition">
+
+
+        <TextView
+            android:id="@+id/textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:layout_gravity="center"
+            android:textIsSelectable="true"
+            android:textColor="@color/yellow"/>
+
+    </ScrollView>
+
+
+
+    <LinearLayout
+        android:id="@+id/liniarLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center|bottom">
+
+
+        <ImageView
+            android:id="@+id/retake"
+            android:layout_width="90dp"
+            android:layout_height="90dp"
+            android:autofillHints="Retake Photo"
+            android:clickable="true"
+            android:focusable="true"
+            android:src="@drawable/retake"
+            app:tint="@color/white"
+            android:visibility="gone" />
+
+<!--        <ImageView-->
+<!--            android:id="@+id/copyid"-->
+<!--            android:layout_width="100dp"-->
+<!--            android:layout_height="100dp"-->
+<!--            android:layout_weight="1"-->
+<!--            android:autofillHints="Copy and Save"-->
+<!--            android:clickable="true"-->
+<!--            android:focusable="true"-->
+<!--            android:src="@drawable/copy"-->
+<!--            android:visibility="visible" />-->
+
+<!--        <ImageView-->
+<!--            android:id="@+id/historyid"-->
+<!--            android:layout_width="100dp"-->
+<!--            android:layout_height="100dp"-->
+<!--            android:layout_weight="1"-->
+<!--            android:autofillHints="History"-->
+<!--            android:clickable="true"-->
+<!--            android:focusable="true"-->
+<!--            android:src="@drawable/history"-->
+<!--            android:visibility="gone" />-->
+
+        <ImageView
+            android:id="@+id/shareid"
+            android:layout_width="90dp"
+            android:layout_height="90dp"
+            android:layout_weight="1"
+            android:autofillHints="History"
+            android:clickable="true"
+            android:focusable="true"
+            android:src="@drawable/share"
+            app:tint="@color/white"
+
+            android:visibility="gone" />
+
+    </LinearLayout>
+
+</LinearLayout>

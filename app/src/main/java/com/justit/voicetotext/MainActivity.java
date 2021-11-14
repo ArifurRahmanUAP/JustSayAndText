@@ -1,23 +1,41 @@
 package com.justit.voicetotext;
 
+import android.content.ContentValues;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
+import android.util.SparseArray;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
-
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
+import com.google.android.gms.vision.Frame;
+import com.google.android.gms.vision.text.TextBlock;
+import com.google.android.gms.vision.text.TextRecognizer;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.theartofdev.edmodo.cropper.CropImage;
+import com.theartofdev.edmodo.cropper.CropImageView;
+
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 
 public class MainActivity extends AppCompatActivity {
     BottomNavigationView bottomNav;
     ImageView appShare;
+    Bitmap bitmap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,8 +48,7 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().setElevation(0);
         View view = getSupportActionBar().getCustomView();
         appShare = view.findViewById(R.id.appShare);
-
-      appShare = findViewById(R.id.appShare);
+        appShare = findViewById(R.id.appShare);
 
         appShare.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -57,27 +74,82 @@ public class MainActivity extends AppCompatActivity {
                 new JustSay()).commit();
     }
 
+    Fragment selectedFragment = null;
+
     private BottomNavigationView.OnNavigationItemSelectedListener navListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-            Fragment selectedFragment = null;
-            switch (item.getItemId())
-            {
-                case R.id.nav_home:
+            switch (item.getItemId()) {
+                case R.id.nav_justSay:
                     selectedFragment = new JustSay();
                     break;
 
-                case R.id.nav_favorites:
-                    selectedFragment = new ImageToText();
+                case R.id.nav_imageToText:
+//                    selectedFragment = new ImageToText();
+                    CropImage.activity().setGuidelines(CropImageView.Guidelines.ON).start(MainActivity.this);
                     break;
 
-                case R.id.nav_search:
+                case R.id.nav_History:
                     selectedFragment = new History();
                     break;
             }
-            getSupportFragmentManager().beginTransaction().
-                    replace(R.id.fragment_container, selectedFragment).commit();
+
+            if (item.getItemId() != R.id.nav_imageToText)
+                getSupportFragmentManager().beginTransaction().
+                        replace(R.id.fragment_container, selectedFragment).commit();
             return true;
         }
     };
+
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
+            CropImage.ActivityResult result = CropImage.getActivityResult(data);
+            if (resultCode == RESULT_OK) {
+                Uri resultUri = result.getUri();
+                try {
+                    bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), resultUri);
+                    getTextFromImage(bitmap);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    private void getTextFromImage(Bitmap bitmap) {
+
+        TextRecognizer recognizer = new TextRecognizer.Builder(this).build();
+        if (!recognizer.isOperational()) {
+            Toast.makeText(MainActivity.this, "Error", Toast.LENGTH_LONG).show();
+        } else {
+            Frame frame = new Frame.Builder().setBitmap(bitmap).build();
+            SparseArray<TextBlock> textBlockSparseArray = recognizer.detect(frame);
+            StringBuilder stringBuilder = new StringBuilder();
+            for (int i = 0; i < textBlockSparseArray.size(); i++) {
+                TextBlock textBlock = textBlockSparseArray.valueAt(i);
+                stringBuilder.append(textBlock.getValue());
+                stringBuilder.append("\n");
+            }
+            ImageToText imageToText = new ImageToText();
+            imageToText.setImageText(stringBuilder.toString());
+
+
+            Database db = new Database(this);
+            SimpleDateFormat sdf = new SimpleDateFormat("h:mm a  MMM d, yyyy", Locale.getDefault());
+            String currentDateandTime = sdf.format(new Date());
+            ContentValues contentValues = new ContentValues();
+            contentValues.put(Database.DATA, stringBuilder.toString());
+            contentValues.put(Database.DATE, currentDateandTime);
+            contentValues.put(Database.TYPE, "2");
+            SQLiteDatabase sqLiteDatabase = db.getWritableDatabase();
+
+            sqLiteDatabase.insert("info", null, contentValues);
+
+            selectedFragment = imageToText;
+            getSupportFragmentManager().beginTransaction().
+                    replace(R.id.fragment_container, selectedFragment).commit();
+
+        }
+    }
 }

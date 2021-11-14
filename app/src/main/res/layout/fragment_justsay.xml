@@ -19,9 +19,15 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
-            android:layout_marginTop="20dp"
             android:orientation="vertical">
 
+            <com.google.android.gms.ads.AdView
+                android:id="@+id/adView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="bottom"
+                ads:adSize="BANNER"
+                ads:adUnitId="ca-app-pub-4459566286777302/7966254460" />
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
@@ -113,11 +119,11 @@
                 android:id="@+id/idBtnTranslate"
                 android:layout_width="320dp"
                 android:layout_height="55dp"
-                android:gravity="center"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="20dp"
                 android:layout_marginEnd="20dp"
                 android:layout_marginBottom="10dp"
+                android:gravity="center"
                 android:text="@string/translate"
                 android:textAllCaps="false"
                 android:textColor="#FFFFFF"
@@ -211,7 +217,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/clear_after_share"
-                    android:textColor="#A66F6F"/>
+                    android:textColor="#A66F6F" />
 
                 <CheckBox
                     android:id="@+id/checkBoxId"
@@ -219,13 +225,7 @@
                     android:layout_height="wrap_content"
                     android:buttonTint="#A66F6F" />
             </LinearLayout>
-            <com.google.android.gms.ads.AdView
-                android:id="@+id/adView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="bottom"
-                ads:adSize="BANNER"
-                ads:adUnitId="ca-app-pub-4459566286777302/7966254460" />
+
         </LinearLayout>
 
     </androidx.core.widget.NestedScrollView>
