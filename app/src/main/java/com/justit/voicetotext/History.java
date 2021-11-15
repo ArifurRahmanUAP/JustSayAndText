@@ -37,7 +37,7 @@ public class History extends Fragment {
     int position;
     String s;
 
-    String[] history = {"Select Your History Type", "Voice to Text", "Translated Text", "Image to Text"};
+    String[] history = {"All History", "Voice to Text", "Translated Text", "Image to Text"};
 
 
     public History() {
@@ -194,57 +194,59 @@ public class History extends Fragment {
             ImageView delete, edit, share;
             TextView textView1, textView;
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.sample_view, parent, false);
-            delete = convertView.findViewById(R.id.delete);
             share = convertView.findViewById(R.id.share);
-            edit = convertView.findViewById(R.id.edit);
             textView = convertView.findViewById(R.id.textview_id);
             textView1 = convertView.findViewById(R.id.textview_date);
             textView.setText(text[position]);
             textView1.setText(date[position]);
 
-            delete.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-
-                    new AlertDialog.Builder(getActivity())
-                            .setMessage("Are you sure you want to delete?")
-                            .setNegativeButton(android.R.string.no, null)
-                            .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-
-                                public void onClick(DialogInterface arg0, int arg1) {
-                                    sqLiteDatabase = database.getWritableDatabase();
-                                    long recd = sqLiteDatabase.delete("info", "id=" + id[position], null);
-                                    if (recd != 1) {
-                                        Toast.makeText(getContext(), "Record deleted successfully", Toast.LENGTH_SHORT).show();
-                                    }
-                                    displayData();
-                                }
-                            }).create().show();
-                }
-            });
-
-            edit.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-
-                    Intent intent = new Intent(getActivity(), UpdateData.class);
-                    intent.putExtra("id", id[position]);
-                    intent.putExtra("text", text[position]);
-                    intent.putExtra("date", date[position]);
-                    startActivity(intent);
-                }
-            });
-
             share.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
 
-                    Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
-                    sharingIntent.setType("text/plain");
-                    String shareBody = text[position];
-                    sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Subject Here");
-                    sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
-                    startActivity(Intent.createChooser(sharingIntent, "Share via"));
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                    builder.setTitle("What do you Want to do?");
+                    builder.setItems(new CharSequence[]
+                                    {"Edit", "Delete", "Share"},
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    switch (which) {
+                                        case 0:
+                                            Intent intent = new Intent(getActivity(), UpdateData.class);
+                                            intent.putExtra("id", id[position]);
+                                            intent.putExtra("text", text[position]);
+                                            intent.putExtra("date", date[position]);
+                                            startActivity(intent);
+                                            break;
+                                        case 1:
+                                            new AlertDialog.Builder(getActivity())
+                                                    .setMessage("Are you sure you want to delete?")
+                                                    .setNegativeButton(android.R.string.no, null)
+                                                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+
+                                                        public void onClick(DialogInterface arg0, int arg1) {
+                                                            sqLiteDatabase = database.getWritableDatabase();
+                                                            long recd = sqLiteDatabase.delete("info", "id=" + id[position], null);
+                                                            if (recd != 1) {
+                                                                Toast.makeText(getContext(), "Record deleted successfully", Toast.LENGTH_SHORT).show();
+                                                            }
+                                                            displayData();
+                                                        }
+                                                    }).create().show();
+                                            break;
+                                        case 2:
+                                            Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
+                                            sharingIntent.setType("text/plain");
+                                            String shareBody = text[position];
+                                            sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Subject Here");
+                                            sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
+                                            startActivity(Intent.createChooser(sharingIntent, "Share via"));
+                                            break;
+
+                                    }
+                                }
+                            });
+                    builder.create().show();
 
                 }
             });

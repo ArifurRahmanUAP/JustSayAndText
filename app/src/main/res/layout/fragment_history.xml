@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -8,22 +7,23 @@
     android:orientation="vertical"
     android:padding="8dp"
     style="@style/AppTheme.MaterialTheme"
-    android:background="#8C8B8B">
+    android:background="#FFFFFF">
 
     <com.toptoche.searchablespinnerlibrary.SearchableSpinner
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="45dp"
+        android:background="#B9FFCB"
+
         android:id="@+id/searchSpinner"/>
 
     <ListView
         android:id="@+id/listviewid"
-        android:background="@color/black_shade_1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:listSelector="#8C8B8B"
+        android:listSelector="#FFFFFF"
         android:clickable="true"
-        android:divider="#8C8B8B"
-        android:dividerHeight="10dp"
+        android:divider="#FFFFFF"
+        android:dividerHeight="5dp"
         android:textIsSelectable="true"
         android:focusable="true" />
 
