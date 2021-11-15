@@ -2,6 +2,7 @@ package com.justit.voicetotext;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
+
 import android.annotation.SuppressLint;
 import android.content.ClipData;
 import android.content.ClipboardManager;
@@ -11,13 +12,16 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,6 +33,12 @@ public class History extends Fragment {
     int[] id;
     SQLiteDatabase sqLiteDatabase;
     private Database database;
+    Spinner searchSpinner;
+    int position;
+    String s;
+
+    String[] history = {"Select Your History Type", "Voice to Text", "Translated Text", "Image to Text"};
+
 
     public History() {
         // Required empty public constructor
@@ -42,15 +52,103 @@ public class History extends Fragment {
         listView = view.findViewById(R.id.listviewid);
         database = new Database(getContext());
         empty = view.findViewById(R.id.empty);
-        displayData();
+        searchSpinner = view.findViewById(R.id.searchSpinner);
+
+        ArrayAdapter fromAdapter = new ArrayAdapter(getActivity(), R.layout.spinner_item, history);
+        fromAdapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
+        searchSpinner.setAdapter(fromAdapter);
+
+        searchSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                position = i;
+                if (i == 0) {
+                    displayData();
+                } else {
+                    s = String.valueOf(position);
+                    displayData(s);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
 
         return view;
     }
 
-    private void displayData() {
+
+    private void copytoClip(String text) {
+        ClipboardManager clipBoard = (ClipboardManager) getActivity().getSystemService(Context.CLIPBOARD_SERVICE);
+        ClipData clip = ClipData.newPlainText("Copied Data", text);
+        clipBoard.setPrimaryClip(clip);
+
+        Toast.makeText(getContext(), "Copied", Toast.LENGTH_SHORT).show();
+    }
+
+    public void displayData(String z) {
+
+        if (z == "0") {
+            displayData();
+        } else {
+            listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+                @Override
+                public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                    TextView textView = (TextView) view.findViewById(R.id.textview_id);
+                    final String test = textView.getText().toString();
+                    copytoClip(test);
+                    return true;
+                }
+            });
+
+            sqLiteDatabase = database.getReadableDatabase();
+            Cursor cursor = sqLiteDatabase.rawQuery("SELECT * FROM info WHERE type='" + z + "'", null);
+            Log.d("pod", cursor.toString());
+
+
+            if (cursor.getCount() > 0) {
+                id = new int[cursor.getCount()];
+                text = new String[cursor.getCount()];
+                date = new String[cursor.getCount()];
+
+                int i = 0;
+                while (cursor.moveToNext()) {
+                    id[i] = cursor.getInt(0);
+                    text[i] = cursor.getString(2);
+                    date[i] = cursor.getString(3);
+                    i++;
+                }
+                CustomAdapter adapter = new CustomAdapter();
+                listView.setAdapter(adapter);
+
+            } else if (cursor.getCount() == 0) {
+                empty.setVisibility(View.VISIBLE);
+                listView.setVisibility(View.GONE);
+                Toast.makeText(getContext(), "Empty", Toast.LENGTH_LONG).show();
+            }
+        }
+    }
+
+    public void displayData() {
+
+        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                TextView textView = (TextView) view.findViewById(R.id.textview_id);
+                final String test = textView.getText().toString();
+                copytoClip(test);
+                return true;
+            }
+        });
 
         sqLiteDatabase = database.getReadableDatabase();
-        Cursor cursor = sqLiteDatabase.rawQuery("select *from info", null);
+        Cursor cursor = sqLiteDatabase.rawQuery("SELECT * FROM info", null);
+        Log.d("pod", cursor.toString());
+
+
         if (cursor.getCount() > 0) {
             id = new int[cursor.getCount()];
             text = new String[cursor.getCount()];
@@ -63,7 +161,7 @@ public class History extends Fragment {
                 date[i] = cursor.getString(3);
                 i++;
             }
-            Custom adapter = new Custom();
+            CustomAdapter adapter = new CustomAdapter();
             listView.setAdapter(adapter);
 
         } else if (cursor.getCount() == 0) {
@@ -71,27 +169,9 @@ public class History extends Fragment {
             listView.setVisibility(View.GONE);
             Toast.makeText(getContext(), "Empty", Toast.LENGTH_LONG).show();
         }
-
-        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                TextView textView = (TextView) view.findViewById(R.id.textview_id);
-                final String test = textView.getText().toString();
-                copytoClip(test);
-                return true;
-            }
-        });
     }
 
-    private void copytoClip(String text) {
-        ClipboardManager clipBoard = (ClipboardManager) getActivity().getSystemService(Context.CLIPBOARD_SERVICE);
-        ClipData clip = ClipData.newPlainText("Copied Data", text);
-        clipBoard.setPrimaryClip(clip);
-
-        Toast.makeText(getContext(), "Copied", Toast.LENGTH_SHORT).show();
-    }
-
-    private class Custom extends BaseAdapter {
+    private class CustomAdapter extends BaseAdapter {
 
         @Override
         public int getCount() {

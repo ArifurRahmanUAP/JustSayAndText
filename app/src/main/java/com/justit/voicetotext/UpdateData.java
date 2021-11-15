@@ -3,6 +3,7 @@ package com.justit.voicetotext;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.content.ContentValues;
 import android.content.DialogInterface;
@@ -13,6 +14,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -39,6 +41,7 @@ public class UpdateData extends AppCompatActivity {
         setContentView(R.layout.activity_show_data);
         textEdit = findViewById(R.id.textview_id1);
         edit = findViewById(R.id.edit1);
+
         database = new Database(UpdateData.this);
         dateEdit = findViewById(R.id.textview_date1);
         date = getIntent().getStringExtra("date");
@@ -83,7 +86,7 @@ public class UpdateData extends AppCompatActivity {
                                 } else {
                                     Toast.makeText(UpdateData.this, "Something wrong try again", Toast.LENGTH_SHORT).show();
                                 }
-                                Intent i = new Intent(UpdateData.this, History.class);
+                                Intent i = new Intent(UpdateData.this, MainActivity.class);
                                 startActivity(i);
                             }
                         }).create().show();

@@ -4,11 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".UpdateData"
+    tools:context=".History"
     android:orientation="vertical"
     android:padding="8dp"
     style="@style/AppTheme.MaterialTheme"
     android:background="#8C8B8B">
+
+    <com.toptoche.searchablespinnerlibrary.SearchableSpinner
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/searchSpinner"/>
 
     <ListView
         android:id="@+id/listviewid"

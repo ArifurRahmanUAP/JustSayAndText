@@ -137,10 +137,11 @@ public class MainActivity extends AppCompatActivity {
             ContentValues contentValues = new ContentValues();
             contentValues.put(Database.DATA, stringBuilder.toString());
             contentValues.put(Database.DATE, currentDateandTime);
-            contentValues.put(Database.TYPE, "2");
+            contentValues.put(Database.TYPE, "3");
             SQLiteDatabase sqLiteDatabase = db.getWritableDatabase();
 
             sqLiteDatabase.insert("info", null, contentValues);
+
             selectedFragment = imageToText;
 
             getSupportFragmentManager().beginTransaction().

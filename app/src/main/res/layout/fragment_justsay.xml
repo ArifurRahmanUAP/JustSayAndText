@@ -83,7 +83,7 @@
                 android:orientation="horizontal"
                 android:weightSum="3">
 
-                <Spinner
+                <com.toptoche.searchablespinnerlibrary.SearchableSpinner
                     android:id="@+id/idFromSpinner"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
@@ -102,7 +102,7 @@
                     android:src="@drawable/right"
                     app:tint="@color/white" />
 
-                <Spinner
+                <com.toptoche.searchablespinnerlibrary.SearchableSpinner
                     android:id="@+id/idToSpinner"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"

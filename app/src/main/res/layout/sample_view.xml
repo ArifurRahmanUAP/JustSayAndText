@@ -26,7 +26,6 @@
             tools:ignore="HardcodedText" />
 
         <TextView
-            android:textColor="@color/white"
             android:id="@+id/textview_id"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -35,9 +34,10 @@
             android:layout_marginLeft="20dp"
             android:hint="No text on Image"
             android:padding="2dp"
+            android:textColor="@color/white"
+            android:textIsSelectable="true"
             android:textSize="15sp"
-            tools:ignore="HardcodedText"
-            android:textIsSelectable="true"/>
+            tools:ignore="HardcodedText" />
 
         <ImageView
             android:outlineAmbientShadowColor="@color/white"
@@ -51,6 +51,7 @@
             android:layout_marginRight="35dp"
             android:contentDescription="Edit"
             android:src="@drawable/edit"
+            app:tint="@color/white"
             tools:ignore="HardcodedText" />
 
         <ImageView
@@ -64,6 +65,7 @@
             android:layout_marginRight="35dp"
             android:contentDescription="Edit"
             android:src="@drawable/share"
+            app:tint="@color/yellow"
             tools:ignore="HardcodedText" />
 
         <ImageView
@@ -75,6 +77,7 @@
             android:layout_marginTop="1dp"
             android:contentDescription="Delete"
             android:src="@drawable/delete"
+            app:tint="#BD2828"
             tools:ignore="HardcodedText" />
 
 

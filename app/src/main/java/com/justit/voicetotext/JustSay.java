@@ -9,9 +9,11 @@ import androidx.fragment.app.Fragment;
 import android.Manifest;
 import android.content.ClipData;
 import android.content.ClipboardManager;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.speech.RecognizerIntent;
 import android.util.Log;
@@ -42,7 +44,10 @@ import com.google.firebase.ml.naturallanguage.translate.FirebaseTranslateLanguag
 import com.google.firebase.ml.naturallanguage.translate.FirebaseTranslator;
 import com.google.firebase.ml.naturallanguage.translate.FirebaseTranslatorOptions;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Locale;
 
 public class JustSay extends Fragment {
 
@@ -252,6 +257,17 @@ public class JustSay extends Fragment {
         if (requestCode == REQUEST_PERMISSION_CODE && resultCode == RESULT_OK && data != null) {
             ArrayList<String> result = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
             sourceEdt.setText(result.get(0));
+
+
+            Database db = new Database(getContext());
+            SimpleDateFormat sdf = new SimpleDateFormat("h:mm a  MMM d, yyyy", Locale.getDefault());
+            String currentDateandTime = sdf.format(new Date());
+            ContentValues contentValues = new ContentValues();
+            contentValues.put(Database.DATA, result.get(0));
+            contentValues.put(Database.DATE, currentDateandTime);
+            contentValues.put(Database.TYPE, "1");
+            SQLiteDatabase sqLiteDatabase = db.getWritableDatabase();
+            sqLiteDatabase.insert("info", null, contentValues);
         }
     }
 
@@ -272,6 +288,15 @@ public class JustSay extends Fragment {
                     @Override
                     public void onSuccess(String s) {
                         translateTv.setText(s);
+                        Database db = new Database(getContext());
+                        SimpleDateFormat sdf = new SimpleDateFormat("h:mm a  MMM d, yyyy", Locale.getDefault());
+                        String currentDateandTime = sdf.format(new Date());
+                        ContentValues contentValues = new ContentValues();
+                        contentValues.put(Database.DATA, s);
+                        contentValues.put(Database.DATE, currentDateandTime);
+                        contentValues.put(Database.TYPE, "2");
+                        SQLiteDatabase sqLiteDatabase = db.getWritableDatabase();
+                        sqLiteDatabase.insert("info", null, contentValues);
                     }
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
