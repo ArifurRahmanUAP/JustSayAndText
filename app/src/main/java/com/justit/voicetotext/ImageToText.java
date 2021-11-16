@@ -28,7 +28,6 @@ public class ImageToText extends Fragment {
     private ImageView retake, share;
     private TextView textView;
     private static final int REQUEST_CAMERA_CODE = 100;
-    Bitmap bitmap;
     Database db;
     private AdView mAdView;
     InterstitialAd mInterstitialAd;
@@ -43,17 +42,9 @@ public class ImageToText extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_texttoimage, container, false);
 
-
-//        if (getSupportActionBar() != null) {
-//            getSupportActionBar().hide();
-//        }
-
-//        Toast.makeText(MainActivity.this,"Developed by Arifur Rahman",Toast.LENGTH_LONG).show();
         share = view.findViewById(R.id.shareid);
         textView = view.findViewById(R.id.textview);
-//        copy = view.findViewById(R.id.copyid);
         retake = view.findViewById(R.id.retake);
-//        history = view.findViewById(R.id.historyid);
         db = new Database(getActivity());
 
         MobileAds.initialize(getActivity());
@@ -103,28 +94,6 @@ public class ImageToText extends Fragment {
             }
         });
 
-//        copy.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                String copy_text = textView.getText().toString();
-//                copytoClip(copy_text);
-//                ContentValues contentValues = new ContentValues();
-//                contentValues.put("name", textView.getText().toString());
-//                contentValues.put("date", currentDateandTime);
-//                SQLiteDatabase sqLiteDatabase = db.getWritableDatabase();
-//
-//                Long recid = sqLiteDatabase.insert("info", null, contentValues);
-//
-//                if (recid != null) {
-//
-//                    Toast.makeText(getActivity(), "Data Coppied and saved", Toast.LENGTH_SHORT).show();
-//                } else {
-//
-//                    Toast.makeText(getActivity(), "Something is Wrong pls try again ", Toast.LENGTH_LONG).show();
-//                }
-//            }
-//        });
-
         share.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -137,54 +106,8 @@ public class ImageToText extends Fragment {
                 startActivity(Intent.createChooser(sharingIntent, "Share via"));
             }
         });
-
         return view;
     }
-
-//    @Override
-//    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-//        super.onActivityResult(requestCode, resultCode, data);
-//        if(requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE)
-//        {
-//            CropImage.ActivityResult result = CropImage.getActivityResult(data);
-//            if(resultCode == RESULT_OK)
-//            {
-//                Uri resultUri = result.getUri();
-//                try {
-//                    bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(),resultUri);
-//                    getTextFromImage(bitmap);
-//                } catch (IOException e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//
-//        }
-//    }
-
-    //    private  void getTextFromImage(Bitmap bitmap) {
-//
-//        TextRecognizer recognizer = new TextRecognizer.Builder(getActivity()).build();
-//        if (!recognizer.isOperational()) {
-//            Toast.makeText(getActivity(), "Error", Toast.LENGTH_LONG).show();
-//        } else {
-//            Frame frame = new Frame.Builder().setBitmap(bitmap).build();
-//            SparseArray<TextBlock> textBlockSparseArray = recognizer.detect(frame);
-//            StringBuilder stringBuilder = new StringBuilder();
-//            for (int i = 0; i < textBlockSparseArray.size(); i++) {
-//                TextBlock textBlock = textBlockSparseArray.valueAt(i);
-//                stringBuilder.append(textBlock.getValue());
-//                stringBuilder.append("\n");
-//            }
-//
-//            String result = getArguments().getString("result");
-//
-//
-//            textView.setText(result);
-//            copy.setVisibility(View.VISIBLE);
-//            retake.setVisibility(View.VISIBLE);
-//            share.setVisibility(View.VISIBLE);
-//        }
-//    }
 
     String cropedText;
 

@@ -7,7 +7,7 @@
     style="@style/AppTheme.MaterialTheme"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/black_shade_1"
+    android:background="@color/white"
     android:orientation="vertical"
     tools:context=".JustSay">
 
@@ -28,6 +28,7 @@
                 android:gravity="bottom"
                 ads:adSize="BANNER"
                 ads:adUnitId="ca-app-pub-4459566286777302/7966254460" />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
@@ -38,7 +39,7 @@
 
                 <com.google.android.material.textfield.TextInputLayout
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginStart="20dp"
@@ -46,9 +47,8 @@
                     android:hint="@string/source_text"
                     android:orientation="horizontal"
                     android:padding="5dp"
-                    android:textColorHint="@color/white"
-                    app:hintTextColor="@color/white">
-
+                    android:textColorHint="@color/black_shade_1"
+                    app:hintTextColor="@color/black_shade_1">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/idEdtsource"
@@ -57,8 +57,8 @@
                         android:ems="10"
                         android:importantForAutofill="no"
                         android:inputType="textImeMultiLine|textMultiLine"
-                        android:textColor="@color/white"
-                        android:textColorHint="@color/white"
+                        android:textColor="@color/black_shade_1"
+                        android:textColorHint="@color/black_shade_1"
                         android:textSize="14sp" />
 
                 </com.google.android.material.textfield.TextInputLayout>
@@ -72,6 +72,7 @@
                     android:src="@drawable/share"
                     app:tint="@color/yellow"
                     tools:ignore="RedundantDescriptionCheck" />
+
             </LinearLayout>
 
             <LinearLayout
@@ -90,7 +91,6 @@
                     android:layout_gravity="center"
                     android:layout_margin="3dp"
                     android:layout_weight="1"
-                    android:outlineSpotShadowColor="#FFFFFF"
                     android:padding="3dp"
                     tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 
@@ -100,7 +100,7 @@
                     android:layout_gravity="center"
                     android:layout_weight="1"
                     android:src="@drawable/right"
-                    app:tint="@color/white" />
+                    app:tint="@color/black" />
 
                 <com.toptoche.searchablespinnerlibrary.SearchableSpinner
                     android:id="@+id/idToSpinner"
@@ -126,7 +126,6 @@
                 android:gravity="center"
                 android:text="@string/translate"
                 android:textAllCaps="false"
-                android:textColor="#FFFFFF"
                 tools:ignore="TextContrastCheck,TextContrastCheck" />
 
             <LinearLayout
@@ -145,8 +144,8 @@
                     android:hint="@string/translated_text"
                     android:orientation="horizontal"
                     android:padding="5dp"
-                    android:textColorHint="@color/white"
-                    app:hintTextColor="@color/white">
+                    android:textColorHint="@color/black_shade_1"
+                    app:hintTextColor="@color/black_shade_1">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/idEdttranslated"
@@ -156,10 +155,9 @@
                         android:ems="10"
                         android:importantForAutofill="no"
                         android:inputType="textImeMultiLine|textMultiLine"
-                        android:textColor="@color/white"
-                        android:textColorHint="@color/white"
+                        android:textColor="@color/black_shade_1"
+                        android:textColorHint="@color/black_shade_1"
                         android:textSize="14sp" />
-
                 </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -204,8 +202,8 @@
                     android:paddingTop="5dp"
                     android:src="@drawable/mic"
                     app:tint="@color/yellow" />
-            </LinearLayout>
 
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -229,8 +227,5 @@
         </LinearLayout>
 
     </androidx.core.widget.NestedScrollView>
-
-
-
 
 </RelativeLayout>

@@ -2,6 +2,7 @@ package com.justit.voicetotext;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import android.annotation.SuppressLint;
 import android.content.ClipData;
@@ -37,7 +38,7 @@ public class History extends Fragment {
     int position;
     String s;
 
-    String[] history = {"All History", "Voice to Text", "Translated Text", "Image to Text"};
+    String[] history = {"Filter History by Category", "Voice to Text", "Translated Text", "Image to Text"};
 
 
     public History() {
@@ -110,6 +111,8 @@ public class History extends Fragment {
 
 
             if (cursor.getCount() > 0) {
+                listView.setVisibility(View.VISIBLE);
+                empty.setVisibility(view.GONE);
                 id = new int[cursor.getCount()];
                 text = new String[cursor.getCount()];
                 date = new String[cursor.getCount()];
@@ -145,9 +148,7 @@ public class History extends Fragment {
         });
 
         sqLiteDatabase = database.getReadableDatabase();
-        Cursor cursor = sqLiteDatabase.rawQuery("SELECT * FROM info", null);
-        Log.d("pod", cursor.toString());
-
+        Cursor cursor = sqLiteDatabase.rawQuery("SELECT * FROM info ORDER BY id DESC", null);
 
         if (cursor.getCount() > 0) {
             id = new int[cursor.getCount()];
@@ -191,63 +192,66 @@ public class History extends Fragment {
         @SuppressLint("ViewHolder")
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-            ImageView delete, edit, share;
+            ImageView delete, edit, share, translate;
             TextView textView1, textView;
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.sample_view, parent, false);
+            delete = convertView.findViewById(R.id.delete);
+            translate = convertView.findViewById(R.id.gtranslate);
+            edit = convertView.findViewById(R.id.edit);
             share = convertView.findViewById(R.id.share);
             textView = convertView.findViewById(R.id.textview_id);
             textView1 = convertView.findViewById(R.id.textview_date);
             textView.setText(text[position]);
             textView1.setText(date[position]);
 
+            translate.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    String shareBody = text[position];
+
+                }
+            });
+
+            edit.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(getActivity(), UpdateData.class);
+                    intent.putExtra("id", id[position]);
+                    intent.putExtra("text", text[position]);
+                    intent.putExtra("date", date[position]);
+                    startActivity(intent);
+                }
+            });
+
+            delete.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    new AlertDialog.Builder(getActivity())
+                            .setMessage("Are you sure you want to delete?")
+                            .setNegativeButton(android.R.string.no, null)
+                            .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+
+                                public void onClick(DialogInterface arg0, int arg1) {
+                                    sqLiteDatabase = database.getWritableDatabase();
+                                    long recd = sqLiteDatabase.delete("info", "id=" + id[position], null);
+                                    if (recd != 1) {
+                                        Toast.makeText(getContext(), "Record deleted successfully", Toast.LENGTH_SHORT).show();
+                                    }
+                                    displayData();
+                                }
+                            }).create().show();
+                }
+            });
+
             share.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
-                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                    builder.setTitle("What do you Want to do?");
-                    builder.setItems(new CharSequence[]
-                                    {"Edit", "Delete", "Share"},
-                            new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int which) {
-                                    switch (which) {
-                                        case 0:
-                                            Intent intent = new Intent(getActivity(), UpdateData.class);
-                                            intent.putExtra("id", id[position]);
-                                            intent.putExtra("text", text[position]);
-                                            intent.putExtra("date", date[position]);
-                                            startActivity(intent);
-                                            break;
-                                        case 1:
-                                            new AlertDialog.Builder(getActivity())
-                                                    .setMessage("Are you sure you want to delete?")
-                                                    .setNegativeButton(android.R.string.no, null)
-                                                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-
-                                                        public void onClick(DialogInterface arg0, int arg1) {
-                                                            sqLiteDatabase = database.getWritableDatabase();
-                                                            long recd = sqLiteDatabase.delete("info", "id=" + id[position], null);
-                                                            if (recd != 1) {
-                                                                Toast.makeText(getContext(), "Record deleted successfully", Toast.LENGTH_SHORT).show();
-                                                            }
-                                                            displayData();
-                                                        }
-                                                    }).create().show();
-                                            break;
-                                        case 2:
-                                            Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
-                                            sharingIntent.setType("text/plain");
-                                            String shareBody = text[position];
-                                            sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Subject Here");
-                                            sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
-                                            startActivity(Intent.createChooser(sharingIntent, "Share via"));
-                                            break;
-
-                                    }
-                                }
-                            });
-                    builder.create().show();
-
+                    Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
+                    sharingIntent.setType("text/plain");
+                    String shareBody = text[position];
+                    sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Subject Here");
+                    sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
+                    startActivity(Intent.createChooser(sharingIntent, "Share via"));
                 }
             });
 

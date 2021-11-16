@@ -7,13 +7,15 @@
     android:orientation="vertical"
     android:padding="8dp"
     style="@style/AppTheme.MaterialTheme"
-    android:background="#FFFFFF">
+    android:background="#9DECBF">
 
     <com.toptoche.searchablespinnerlibrary.SearchableSpinner
         android:layout_width="match_parent"
         android:layout_height="45dp"
-        android:background="#B9FFCB"
-
+        android:layout_gravity="center"
+        android:textStyle="bold"
+        android:padding="3dp"
+        tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck"
         android:id="@+id/searchSpinner"/>
 
     <ListView
@@ -22,11 +24,10 @@
         android:layout_height="wrap_content"
         android:listSelector="#FFFFFF"
         android:clickable="true"
-        android:divider="#FFFFFF"
+        android:divider="#F3EFEF"
         android:dividerHeight="5dp"
         android:textIsSelectable="true"
         android:focusable="true" />
-
 
     <ImageView
         android:visibility="gone"

@@ -1,55 +1,83 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_margin="7dp">
 
-
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="4dp">
+        android:layout_margin="4dp"
+        android:baselineAligned="false"
+        android:orientation="horizontal"
+        android:weightSum="5">
 
-        <TextView
-            android:textColor="@color/yellow"
-            android:id="@+id/textview_date"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_marginTop="1dp"
-            android:text="Date"
-            android:layout_marginStart="20dp"
-            tools:ignore="HardcodedText" />
-
-        <TextView
-            android:id="@+id/textview_id"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/textview_date"
-            android:layout_marginStart="20dp"
-            android:hint="No text on Image"
-            android:padding="2dp"
-            android:textColor="@color/black"
-            android:textIsSelectable="true"
-            android:textSize="15sp"
-            tools:ignore="HardcodedText" />
+            android:layout_weight="4"
+            android:orientation="vertical">
 
-        <ImageView
-            android:id="@+id/share"
-            android:layout_width="35dp"
-            android:layout_height="50dp"
-            android:layout_alignParentEnd="true"
-            android:layout_centerInParent="true"
-            android:contentDescription="Edit"
-            android:src="@drawable/info"
-            app:tint="@color/yellow"
-            tools:ignore="HardcodedText" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
 
+                <TextView
+                    android:id="@+id/textview_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="1dp"
+                    android:text="Date"
+                    android:textColor="@color/yellow"
+                    android:textSize="16sp"
+                    tools:ignore="HardcodedText" />
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="right"
+                    android:orientation="horizontal">
 
-    </RelativeLayout>
+                    <ImageView
+                        android:id="@+id/gtranslate"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/gtranslate" />
 
+                    <ImageView
+                        android:id="@+id/edit"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/edit" />
+
+                    <ImageView
+                        android:id="@+id/delete"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/delete" />
+
+                    <ImageView
+                        android:id="@+id/share"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/share" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/textview_id"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:hint="No text on Image"
+                android:padding="2dp"
+                android:textColor="@color/black"
+                android:textIsSelectable="true"
+                android:textSize="15sp"
+                tools:ignore="HardcodedText" />
+        </LinearLayout>
+    </LinearLayout>
 </androidx.cardview.widget.CardView>
