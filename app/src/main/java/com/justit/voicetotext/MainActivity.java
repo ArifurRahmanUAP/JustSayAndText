@@ -41,6 +41,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+//        getSupportFragmentManager().beginTransaction().add(R.id.container, new History()).commit();
+
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getSupportActionBar().setDisplayShowCustomEnabled(true);
         getSupportActionBar().setCustomView(R.layout.toolbar);
@@ -140,6 +142,7 @@ public class MainActivity extends AppCompatActivity {
             contentValues.put(Database.DATA, stringBuilder.toString());
             contentValues.put(Database.DATE, currentDateandTime);
             contentValues.put(Database.TYPE, "3");
+            contentValues.put(Database.COLOR, "#0000b3");
             SQLiteDatabase sqLiteDatabase = db.getWritableDatabase();
 
             sqLiteDatabase.insert("info", null, contentValues);

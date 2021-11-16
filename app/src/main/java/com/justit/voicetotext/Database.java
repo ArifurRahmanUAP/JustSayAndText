@@ -9,15 +9,16 @@ import android.widget.Toast;
 
 public class Database extends SQLiteOpenHelper {
 
-    public static final int dbversion = 18;
+    public static final int dbversion = 1;
     public static final String dbname = "Data.db";
     public static final String ID = "id";
     public static final String TYPE = "type";
     public static final String TABLE_NAME = "info";
     public static final String DATA = "data";
     public static final String DATE = "date";
+    public static final String COLOR = "color";
 
-    public static final String Create_Table = ("create table " + TABLE_NAME + " ( " + ID + " INTEGER PRIMARY KEY ," + TYPE + " INTEGER, " + DATA + ", " + DATE + ")");
+    public static final String Create_Table = ("create table " + TABLE_NAME + " ( " + ID + " INTEGER PRIMARY KEY ," + COLOR + "," + TYPE + " INTEGER, " + DATA + ", " + DATE + ")");
     private final Context context;
 
     public Database(Context context) {

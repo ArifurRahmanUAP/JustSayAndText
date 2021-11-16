@@ -80,6 +80,10 @@ public class JustSay extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_justsay, container, false);
 
+//        Bundle bundle = this.getArguments();
+//        String datas = bundle.getString("datas");
+//        sourceEdt.setText(datas);
+
         MobileAds.initialize(requireContext());
 
         if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
@@ -265,6 +269,7 @@ public class JustSay extends Fragment {
             ContentValues contentValues = new ContentValues();
             contentValues.put(Database.DATA, result.get(0));
             contentValues.put(Database.DATE, currentDateandTime);
+            contentValues.put(Database.COLOR, "#ff0000");
             contentValues.put(Database.TYPE, "1");
             SQLiteDatabase sqLiteDatabase = db.getWritableDatabase();
             sqLiteDatabase.insert("info", null, contentValues);
@@ -294,6 +299,7 @@ public class JustSay extends Fragment {
                         ContentValues contentValues = new ContentValues();
                         contentValues.put(Database.DATA, s);
                         contentValues.put(Database.DATE, currentDateandTime);
+                        contentValues.put(Database.COLOR, "#00c800");
                         contentValues.put(Database.TYPE, "2");
                         SQLiteDatabase sqLiteDatabase = db.getWritableDatabase();
                         sqLiteDatabase.insert("info", null, contentValues);
