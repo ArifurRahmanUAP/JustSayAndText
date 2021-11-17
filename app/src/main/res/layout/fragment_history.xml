@@ -3,11 +3,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#F1EDED"
     tools:context=".History"
     android:orientation="vertical"
     android:padding="8dp"
-    style="@style/AppTheme.MaterialTheme"
-    android:background="#9DECBF">
+    style="@style/AppTheme.MaterialTheme">
 
     <com.toptoche.searchablespinnerlibrary.SearchableSpinner
         android:layout_width="match_parent"
@@ -21,10 +21,9 @@
     <ListView
         android:id="@+id/listviewid"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:listSelector="#FFFFFF"
+        android:layout_height="match_parent"
         android:clickable="true"
-        android:divider="#F3EFEF"
+        android:divider="#F1EDED"
         android:dividerHeight="5dp"
         android:textIsSelectable="true"
         android:focusable="true" />

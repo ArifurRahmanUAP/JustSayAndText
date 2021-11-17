@@ -16,12 +16,14 @@ import android.content.pm.PackageManager;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.speech.RecognizerIntent;
-import android.util.Log;
+import android.telephony.TelephonyManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.LinearInterpolator;
+import android.view.animation.RotateAnimation;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.Spinner;
@@ -47,7 +49,9 @@ import com.google.firebase.ml.naturallanguage.translate.FirebaseTranslatorOption
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 
 public class JustSay extends Fragment {
 
@@ -56,19 +60,24 @@ public class JustSay extends Fragment {
     private CheckBox checkBoxId;
     private Spinner fromSpinner, toSpinner;
     private TextInputEditText sourceEdt, translateTv;
-    private ImageView mic, sourseTexeShare, translatedTexeShare;
+    private ImageView mic, sourseTexeShare, translatedTexeShare, swapButton;
     private MaterialButton translateBtn;
     String languageCode = "0";
     public AdView mAdView;
     private static final int REQUEST_PERMISSION_CODE = 0;
     int fromLanguageCode, toLanguageCode = 0;
     String voiceLanguageCode;
+    CustomAdapter customAdapter;
 
-    String[] fromLanguages = {"English", "Bengali", "Hindi", "Urdu", "Philippine", "Afrikaans", "Arabic", "Korean", "Japanese",
+
+    String[] languages = {"English", "Bengali", "Hindi", "Urdu", "Philippine", "Afrikaans", "Arabic", "Korean", "Japanese",
             "Catalan", "Spanish", "Swedish", "Chinese", "Danish", "German", "Dutch", "Greek", "French", "Indonesian", "Italian"};
 
-    String[] toLanguages = {"Bengali", "English", "Hindi", "Urdu", "Philippine", "Afrikaans", "Arabic", "Korean", "Japanese",
-            "Catalan", "Spanish", "Swedish", "Chinese", "Danish", "German", "Dutch", "Greek", "French", "Indonesian", "Italian"};
+    Map<String, Integer> countryShortName = new HashMap<>();
+
+    int[] flags = {R.drawable.english, R.drawable.bengali, R.drawable.hindi, R.drawable.urdu, R.drawable.philippine, R.drawable.afrikaans,
+            R.drawable.arabic, R.drawable.korean, R.drawable.japanese, R.drawable.catalan, R.drawable.spanish, R.drawable.swedish, R.drawable.chinese,
+            R.drawable.danish, R.drawable.german, R.drawable.dutch, R.drawable.greek, R.drawable.french, R.drawable.indonesian, R.drawable.italian};
 
     public JustSay() {
         // Required empty public constructor
@@ -77,8 +86,40 @@ public class JustSay extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+
+        RotateAnimation rotate = new RotateAnimation(0, 180, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+        rotate.setDuration(300);
+        rotate.setInterpolator(new LinearInterpolator());
+
+        countryShortName.put("en", 0);
+        countryShortName.put("bd", 1);
+        countryShortName.put("in", 2);
+        countryShortName.put("pk", 3);
+        countryShortName.put("ph", 4);
+        countryShortName.put("cf", 5);
+        countryShortName.put("sa", 6);
+        countryShortName.put("kr", 7);
+        countryShortName.put("jp", 8);
+        countryShortName.put("tf", 9);
+        countryShortName.put("es", 10);
+        countryShortName.put("se", 11);
+        countryShortName.put("cn", 12);
+        countryShortName.put("dk", 13);
+        countryShortName.put("de", 14);
+        countryShortName.put("nl", 15);
+        countryShortName.put("gr", 16);
+        countryShortName.put("fr", 17);
+        countryShortName.put("id", 18);
+        countryShortName.put("it", 19);
+
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_justsay, container, false);
+
+//        String localeCountryCode= getActivity().getResources().getConfiguration().locale.getCountry();
+        TelephonyManager telephoneManager = (TelephonyManager) getActivity().getSystemService(Context.TELEPHONY_SERVICE);
+        String countryCode = telephoneManager.getNetworkCountryIso();
+
 
 //        Bundle bundle = this.getArguments();
 //        String datas = bundle.getString("datas");
@@ -104,6 +145,7 @@ public class JustSay extends Fragment {
         mAdView = view.findViewById(R.id.adView);
         mAdView.loadAd(adRequest);
 
+        swapButton = view.findViewById(R.id.swapButton);
         fromSpinner = view.findViewById(R.id.idFromSpinner);
         toSpinner = view.findViewById(R.id.idToSpinner);
         sourceEdt = view.findViewById(R.id.idEdtsource);
@@ -112,10 +154,28 @@ public class JustSay extends Fragment {
         translateBtn = view.findViewById(R.id.idBtnTranslate);
         translateTv = view.findViewById(R.id.idEdttranslated);
 
+        customAdapter = new CustomAdapter(getActivity(), languages, flags);
+        fromSpinner.setAdapter(customAdapter);
+        toSpinner.setAdapter(customAdapter);
+        if (countryShortName.get(countryCode) != null) {
+            fromSpinner.setSelection(countryShortName.get(countryCode));
+        } else
+            fromSpinner.setSelection(0);
+        swapButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (translateTv != null) {
+                    swapButton.startAnimation(rotate);
+                    sourceEdt.setText(translateTv.getText().toString());
+//                    translateTv.setText("");
+                }
+            }
+        });
+
         fromSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                fromLanguageCode = getLanguageCode(fromLanguages[position], true);
+                fromLanguageCode = getLanguageCode(languages[position], true);
             }
 
             @Override
@@ -124,14 +184,10 @@ public class JustSay extends Fragment {
             }
         });
 
-        ArrayAdapter fromAdapter = new ArrayAdapter(getActivity(), R.layout.spinner_item, fromLanguages);
-        fromAdapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
-        fromSpinner.setAdapter(fromAdapter);
-
         toSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                toLanguageCode = getLanguageCode(toLanguages[position], false);
+                toLanguageCode = getLanguageCode(languages[position], false);
             }
 
             @Override
@@ -174,19 +230,19 @@ public class JustSay extends Fragment {
             }
         });
 
-        ArrayAdapter toAdapter = new ArrayAdapter(getActivity(), R.layout.spinner_item, toLanguages);
-        toAdapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
-        toSpinner.setAdapter(toAdapter);
+//        ArrayAdapter toAdapter = new ArrayAdapter(getActivity(), R.layout.spinner_item, toLanguages);
+//        toAdapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
+//        toSpinner.setAdapter(toAdapter);
 
         translateBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                if (mInterstitialAd != null) {
-                    mInterstitialAd.show(getActivity());
-                } else {
-                    Log.d("TAG", "The interstitial ad wasn't ready yet.");
-                }
+//                if (mInterstitialAd != null) {
+//                    mInterstitialAd.show(getActivity());
+//                } else {
+//                    Log.d("TAG", "The interstitial ad wasn't ready yet.");
+//                }
 
                 translateTv.setText("");
                 if (sourceEdt.getText().toString().isEmpty()) {
@@ -269,7 +325,7 @@ public class JustSay extends Fragment {
             ContentValues contentValues = new ContentValues();
             contentValues.put(Database.DATA, result.get(0));
             contentValues.put(Database.DATE, currentDateandTime);
-            contentValues.put(Database.COLOR, "#ff0000");
+            contentValues.put(Database.COLOR, "#000000");
             contentValues.put(Database.TYPE, "1");
             SQLiteDatabase sqLiteDatabase = db.getWritableDatabase();
             sqLiteDatabase.insert("info", null, contentValues);
@@ -299,7 +355,7 @@ public class JustSay extends Fragment {
                         ContentValues contentValues = new ContentValues();
                         contentValues.put(Database.DATA, s);
                         contentValues.put(Database.DATE, currentDateandTime);
-                        contentValues.put(Database.COLOR, "#00c800");
+                        contentValues.put(Database.COLOR, "#FF0000");
                         contentValues.put(Database.TYPE, "2");
                         SQLiteDatabase sqLiteDatabase = db.getWritableDatabase();
                         sqLiteDatabase.insert("info", null, contentValues);

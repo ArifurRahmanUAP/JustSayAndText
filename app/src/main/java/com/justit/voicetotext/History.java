@@ -22,7 +22,9 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -107,7 +109,7 @@ public class History extends Fragment {
             listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
                 @Override
                 public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                    TextView textView = (TextView) view.findViewById(R.id.textview_id);
+                    EditText textView = (EditText) view.findViewById(R.id.textview_id);
                     final String test = textView.getText().toString();
                     copytoClip(test);
                     return true;
@@ -211,7 +213,7 @@ public class History extends Fragment {
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
             ImageView delete, edit, share, translate;
-            CardView cardView;
+            LinearLayout cardView;
             TextView textView1, textView;
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.sample_view, parent, false);
             cardView = convertView.findViewById(R.id.cardview);

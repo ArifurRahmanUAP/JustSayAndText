@@ -3,7 +3,6 @@ package com.justit.voicetotext;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentTransaction;
 
 import android.content.ContentValues;
 import android.content.DialogInterface;
@@ -14,7 +13,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,7 +27,8 @@ public class UpdateData extends AppCompatActivity {
     Database database;
     SQLiteDatabase sqLiteDatabase;
     String text, date;
-    ImageView edit;
+    Integer editedId;
+    ImageView update;
     EditText textEdit;
     TextView dateEdit;
     private static int id = 0;
@@ -40,12 +39,13 @@ public class UpdateData extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_data);
         textEdit = findViewById(R.id.textview_id1);
-        edit = findViewById(R.id.edit1);
+        update = findViewById(R.id.edit1);
 
         database = new Database(UpdateData.this);
         dateEdit = findViewById(R.id.textview_date1);
         date = getIntent().getStringExtra("date");
         text = getIntent().getStringExtra("text");
+        editedId = getIntent().getIntExtra("id", 1);
 
         textEdit.setText(text);
         dateEdit.setText(date);
@@ -64,7 +64,7 @@ public class UpdateData extends AppCompatActivity {
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
 
-        edit.setOnClickListener(new View.OnClickListener() {
+        update.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -80,7 +80,7 @@ public class UpdateData extends AppCompatActivity {
                                 contentValues.put(Database.DATA, textEdit.getText().toString());
                                 Log.d("dateEdit", dateEdit.getText().toString());
                                 sqLiteDatabase = database.getWritableDatabase();
-                                long recid = sqLiteDatabase.update("info", contentValues, "data=?", new String[]{text});
+                                long recid = sqLiteDatabase.update("info", contentValues, "id=?", new String[]{String.valueOf(editedId)});
                                 if (recid != -1) {
                                     Toast.makeText(UpdateData.this, "Data update successfully", Toast.LENGTH_SHORT).show();
                                 } else {

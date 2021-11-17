@@ -5,10 +5,14 @@
       <map>
         <entry key="..\:/Users/Arifur Rahman/.gradle/caches/transforms-3/13eb25a7ed717a28f8503e8ba2b11506/transformed/appcompat-1.3.1/res/layout/support_simple_spinner_dropdown_item.xml" value="0.20520833333333333" />
         <entry key="..\:/Users/Arifur Rahman/AndroidStudioProjects/JustSay2/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.11388888888888889" />
+        <entry key="..\:/Users/Arifur Rahman/AndroidStudioProjects/JustSay2/app/src/main/res/drawable/arrow.xml" value="0.16666666666666666" />
+        <entry key="..\:/Users/Arifur Rahman/AndroidStudioProjects/JustSay2/app/src/main/res/drawable/button_background.xml" value="0.17314814814814813" />
         <entry key="..\:/Users/Arifur Rahman/AndroidStudioProjects/JustSay2/app/src/main/res/drawable/camera.xml" value="0.3333333333333333" />
         <entry key="..\:/Users/Arifur Rahman/AndroidStudioProjects/JustSay2/app/src/main/res/drawable/check.xml" value="0.3333333333333333" />
         <entry key="..\:/Users/Arifur Rahman/AndroidStudioProjects/JustSay2/app/src/main/res/drawable/delete.xml" value="0.3333333333333333" />
         <entry key="..\:/Users/Arifur Rahman/AndroidStudioProjects/JustSay2/app/src/main/res/drawable/down.xml" value="0.3333333333333333" />
+        <entry key="..\:/Users/Arifur Rahman/AndroidStudioProjects/JustSay2/app/src/main/res/drawable/edit.xml" value="0.16666666666666666" />
+        <entry key="..\:/Users/Arifur Rahman/AndroidStudioProjects/JustSay2/app/src/main/res/drawable/gtranslate.xml" value="0.16666666666666666" />
         <entry key="..\:/Users/Arifur Rahman/AndroidStudioProjects/JustSay2/app/src/main/res/drawable/history.xml" value="0.21458333333333332" />
         <entry key="..\:/Users/Arifur Rahman/AndroidStudioProjects/JustSay2/app/src/main/res/drawable/ic_launchers_background.xml" value="0.3333333333333333" />
         <entry key="..\:/Users/Arifur Rahman/AndroidStudioProjects/JustSay2/app/src/main/res/drawable/info.xml" value="0.3333333333333333" />
@@ -23,12 +27,14 @@
         <entry key="..\:/Users/Arifur Rahman/AndroidStudioProjects/JustSay2/app/src/main/res/layout/custom_spinner_layout.xml" value="0.14814814814814814" />
         <entry key="..\:/Users/Arifur Rahman/AndroidStudioProjects/JustSay2/app/src/main/res/layout/fragment_history.xml" value="0.20520833333333333" />
         <entry key="..\:/Users/Arifur Rahman/AndroidStudioProjects/JustSay2/app/src/main/res/layout/fragment_home.xml" value="0.33" />
-        <entry key="..\:/Users/Arifur Rahman/AndroidStudioProjects/JustSay2/app/src/main/res/layout/fragment_justsay.xml" value="0.17831813576494426" />
+        <entry key="..\:/Users/Arifur Rahman/AndroidStudioProjects/JustSay2/app/src/main/res/layout/fragment_justsay.xml" value="0.25" />
         <entry key="..\:/Users/Arifur Rahman/AndroidStudioProjects/JustSay2/app/src/main/res/layout/fragment_movie.xml" value="0.10283687943262411" />
         <entry key="..\:/Users/Arifur Rahman/AndroidStudioProjects/JustSay2/app/src/main/res/layout/fragment_sport.xml" value="0.10233029381965553" />
         <entry key="..\:/Users/Arifur Rahman/AndroidStudioProjects/JustSay2/app/src/main/res/layout/fragment_texttoimage.xml" value="0.20572916666666666" />
         <entry key="..\:/Users/Arifur Rahman/AndroidStudioProjects/JustSay2/app/src/main/res/layout/sample_view.xml" value="0.33" />
         <entry key="..\:/Users/Arifur Rahman/AndroidStudioProjects/JustSay2/app/src/main/res/layout/spinner_item.xml" value="0.203125" />
+        <entry key="..\:/Users/Arifur Rahman/AndroidStudioProjects/JustSay2/app/src/main/res/layout/spinner_items.xml" value="0.5" />
+        <entry key="..\:/Users/Arifur Rahman/AndroidStudioProjects/JustSay2/app/src/main/res/layout/to_spinner_items.xml" value="0.21927083333333333" />
         <entry key="..\:/Users/Arifur Rahman/AndroidStudioProjects/JustSay2/app/src/main/res/layout/toolbar.xml" value="0.20729166666666668" />
         <entry key="..\:/Users/Arifur Rahman/AndroidStudioProjects/JustSay2/app/src/main/res/menu/bottom_navigation.xml" value="0.12685185185185185" />
       </map>

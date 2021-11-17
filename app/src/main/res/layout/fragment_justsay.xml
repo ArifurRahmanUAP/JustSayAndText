@@ -7,7 +7,7 @@
     style="@style/AppTheme.MaterialTheme"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="#F1EDED"
     android:orientation="vertical"
     tools:context=".JustSay">
 
@@ -31,6 +31,45 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="10dp"
+                android:orientation="horizontal"
+                android:weightSum="7">
+
+                <Spinner
+                    android:id="@+id/idFromSpinner"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_margin="3dp"
+                    android:layout_weight="3"
+                    android:padding="3dp"
+                    tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:src="@drawable/right"
+                    app:tint="#47A5E8" />
+
+                <Spinner
+                    android:id="@+id/idToSpinner"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_margin="3dp"
+                    android:layout_weight="3"
+                    android:padding="3dp"
+                    tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="100dp"
                 android:layout_marginTop="5dp"
                 android:orientation="horizontal"
@@ -48,6 +87,7 @@
                     android:orientation="horizontal"
                     android:padding="5dp"
                     android:textColorHint="@color/black_shade_1"
+                    ads:boxBackgroundColor="#FFFFFF"
                     app:hintTextColor="@color/black_shade_1">
 
                     <com.google.android.material.textfield.TextInputEditText
@@ -55,11 +95,13 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:ems="10"
+                        android:gravity="center"
                         android:importantForAutofill="no"
                         android:inputType="textImeMultiLine|textMultiLine"
                         android:textColor="@color/black_shade_1"
                         android:textColorHint="@color/black_shade_1"
-                        android:textSize="14sp" />
+                        android:textSize="14sp"
+                        ads:boxBackgroundColor="#FFFFFF" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -70,63 +112,21 @@
                     android:layout_weight="2"
                     android:contentDescription="@string/share_button"
                     android:src="@drawable/share"
-                    app:tint="@color/yellow"
+                    app:tint="#47A5E8"
                     tools:ignore="RedundantDescriptionCheck" />
 
             </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="20dp"
-                android:orientation="horizontal"
-                android:weightSum="3">
+            <ImageView
+                android:id="@+id/swapButton"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:rotation="90"
+                android:src="@drawable/arrow"
+                app:tint="#47A5E8" />
 
-                <com.toptoche.searchablespinnerlibrary.SearchableSpinner
-                    android:id="@+id/idFromSpinner"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center"
-                    android:layout_margin="3dp"
-                    android:layout_weight="1"
-                    android:padding="3dp"
-                    tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
-
-                <ImageView
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center"
-                    android:layout_weight="1"
-                    android:src="@drawable/right"
-                    app:tint="@color/black" />
-
-                <com.toptoche.searchablespinnerlibrary.SearchableSpinner
-                    android:id="@+id/idToSpinner"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center"
-                    android:layout_margin="3dp"
-                    android:layout_weight="1"
-                    android:padding="3dp"
-                    tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
-
-            </LinearLayout>
-
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/idBtnTranslate"
-                android:layout_width="320dp"
-                android:layout_height="55dp"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginEnd="20dp"
-                android:layout_marginBottom="10dp"
-                android:gravity="center"
-                android:text="@string/translate"
-                android:textAllCaps="false"
-                tools:ignore="TextContrastCheck,TextContrastCheck" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -145,19 +145,22 @@
                     android:orientation="horizontal"
                     android:padding="5dp"
                     android:textColorHint="@color/black_shade_1"
+                    ads:boxBackgroundColor="#FFFFFF"
                     app:hintTextColor="@color/black_shade_1">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/idEdttranslated"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_weight="14"
                         android:ems="10"
+                        android:gravity="center"
                         android:importantForAutofill="no"
                         android:inputType="textImeMultiLine|textMultiLine"
                         android:textColor="@color/black_shade_1"
                         android:textColorHint="@color/black_shade_1"
-                        android:textSize="14sp" />
+                        android:textSize="14sp"
+                        ads:boxBackgroundColor="#FFFFFF" />
                 </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -168,7 +171,7 @@
                     android:layout_weight="2"
                     android:contentDescription="@string/share_button"
                     android:src="@drawable/share"
-                    app:tint="@color/yellow"
+                    app:tint="#47A5E8"
                     tools:ignore="RedundantDescriptionCheck" />
             </LinearLayout>
 
@@ -201,7 +204,7 @@
                     android:contentDescription="@string/say_something"
                     android:paddingTop="5dp"
                     android:src="@drawable/mic"
-                    app:tint="@color/yellow" />
+                    app:tint="#47A5E8" />
 
             </LinearLayout>
 
@@ -224,6 +227,19 @@
                     android:buttonTint="#A66F6F" />
             </LinearLayout>
 
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/idBtnTranslate"
+                android:layout_width="320dp"
+                android:layout_height="55dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginBottom="10dp"
+                android:gravity="center"
+                android:text="@string/translate"
+                android:textAllCaps="false"
+                ads:backgroundTint="#47A5E8"
+                tools:ignore="TextContrastCheck,TextContrastCheck" />
         </LinearLayout>
 
     </androidx.core.widget.NestedScrollView>

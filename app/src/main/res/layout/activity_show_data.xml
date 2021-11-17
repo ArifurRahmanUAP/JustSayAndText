@@ -5,7 +5,8 @@
     style="@style/AppTheme.MaterialTheme"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="8dp">
+    android:layout_margin="8dp"
+    android:background="#F1EDED">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -37,6 +38,7 @@
                         android:id="@+id/textview_id1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:minLines="3"
                         android:layout_marginStart="20dp"
                         android:hint="No text on Image"
                         android:padding="2dp"

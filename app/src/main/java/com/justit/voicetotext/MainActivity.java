@@ -5,12 +5,16 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
+import android.graphics.PorterDuff;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.SparseArray;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.LinearInterpolator;
+import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
@@ -40,6 +44,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
 
 //        getSupportFragmentManager().beginTransaction().add(R.id.container, new History()).commit();
 
@@ -83,6 +89,7 @@ public class MainActivity extends AppCompatActivity {
             switch (item.getItemId()) {
                 case R.id.nav_justSay:
                     selectedFragment = new JustSay();
+
                     break;
 
                 case R.id.nav_imageToText:
@@ -142,7 +149,7 @@ public class MainActivity extends AppCompatActivity {
             contentValues.put(Database.DATA, stringBuilder.toString());
             contentValues.put(Database.DATE, currentDateandTime);
             contentValues.put(Database.TYPE, "3");
-            contentValues.put(Database.COLOR, "#0000b3");
+            contentValues.put(Database.COLOR, "#FFFFFF");
             SQLiteDatabase sqLiteDatabase = db.getWritableDatabase();
 
             sqLiteDatabase.insert("info", null, contentValues);

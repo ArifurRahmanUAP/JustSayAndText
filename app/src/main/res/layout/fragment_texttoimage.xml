@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="10dp"
+    android:background="#F1EDED"
     tools:context=".ImageToText">
 
     <com.google.android.gms.ads.AdView
@@ -31,7 +32,7 @@
             android:layout_gravity="center"
             android:textColor="@color/black_shade_1"
             android:textIsSelectable="true"
-            android:textSize="16sp" />
+            android:textSize="14sp" />
     </ScrollView>
 
     <LinearLayout
@@ -49,7 +50,8 @@
             android:clickable="true"
             android:focusable="true"
             android:src="@drawable/camera"
-            android:visibility="visible" />
+            android:visibility="visible"
+            ads:tint="#47A5E8" />
 
         <ImageView
             android:id="@+id/shareid"
@@ -60,7 +62,8 @@
             android:clickable="true"
             android:focusable="true"
             android:src="@drawable/share"
-            android:visibility="visible" />
+            android:visibility="visible"
+            ads:tint="#47A5E8" />
 
     </LinearLayout>
 
