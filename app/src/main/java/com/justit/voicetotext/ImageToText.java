@@ -51,7 +51,8 @@ public class ImageToText extends Fragment {
         AdRequest adRequest = new AdRequest.Builder().build();
         AdView adView = new AdView(getActivity());
         adView.setAdSize(AdSize.BANNER);
-        adView.setAdUnitId("cca-app-pub-7148413509095909/1143566527");
+//        adView.setAdUnitId("ca-app-pub-7148413509095909/1143566527");
+        adView.setAdUnitId("ca-app-pub-3940256099942544/1033173712");
         mAdView = view.findViewById(R.id.adView);
         mAdView.loadAd(adRequest);
         textView.setText(this.cropedText);

@@ -82,13 +82,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     Fragment selectedFragment = null;
-
+    JustSay justSay = new JustSay();
     private BottomNavigationView.OnNavigationItemSelectedListener navListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.nav_justSay:
-                    selectedFragment = new JustSay();
+                    selectedFragment = justSay;
 
                     break;
 
@@ -98,7 +98,7 @@ public class MainActivity extends AppCompatActivity {
                     break;
 
                 case R.id.nav_History:
-                    selectedFragment = new History();
+                    selectedFragment = new History(justSay);
                     break;
             }
 

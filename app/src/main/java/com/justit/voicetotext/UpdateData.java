@@ -52,7 +52,8 @@ public class UpdateData extends AppCompatActivity {
 
         AdView adView = new AdView(this);
         adView.setAdSize(AdSize.BANNER);
-        adView.setAdUnitId("ca-app-pub-7148413509095909/1143566527");
+//        adView.setAdUnitId("ca-app-pub-7148413509095909/1143566527");
+        adView.setAdUnitId("ca-app-pub-3940256099942544/1033173712");
 
         MobileAds.initialize(this, new OnInitializationCompleteListener() {
             @Override

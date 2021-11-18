@@ -4,10 +4,12 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.work.OneTimeWorkRequest;
 
 import android.annotation.SuppressLint;
 import android.content.ClipData;
 import android.content.ClipboardManager;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -33,7 +35,9 @@ import android.widget.Toast;
 public class History extends Fragment {
     View view;
     ListView listView;
-    ImageView empty;
+    LinearLayout showlinearLayout;
+    ImageView empty, editDone;
+    int editDonePosition;
     String[] text, date, color;
     int[] id;
     SQLiteDatabase sqLiteDatabase;
@@ -41,11 +45,15 @@ public class History extends Fragment {
     Spinner searchSpinner;
     int position;
     String s;
+    EditText showData;
+    TextView showDate;
+    JustSay justSay;
 
     String[] history = {"Filter History by Category", "Voice to Text", "Translated Text", "Image to Text"};
 
 
-    public History() {
+    public History(JustSay justSay) {
+        this.justSay = justSay;
         // Required empty public constructor
     }
 
@@ -58,6 +66,10 @@ public class History extends Fragment {
         database = new Database(getContext());
         empty = view.findViewById(R.id.empty);
         searchSpinner = view.findViewById(R.id.searchSpinner);
+        showlinearLayout = view.findViewById(R.id.showlinearLayout);
+        showData = view.findViewById(R.id.showData);
+        showDate = view.findViewById(R.id.showDate);
+        editDone = view.findViewById(R.id.editDone);
 
         ArrayAdapter fromAdapter = new ArrayAdapter(getActivity(), R.layout.spinner_item, history);
         fromAdapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
@@ -73,11 +85,10 @@ public class History extends Fragment {
 //                ((TextView) adapterView.getChildAt(3)).setTextColor(Color.BLUE);
 
                 if (i == 0) {
-                    displayData();
+                    displayData("0");
                 } else {
                     s = String.valueOf(position);
                     displayData(s);
-
                 }
             }
 
@@ -86,7 +97,6 @@ public class History extends Fragment {
 
             }
         });
-
 
         return view;
     }
@@ -102,56 +112,6 @@ public class History extends Fragment {
 
     public void displayData(String z) {
 
-        if (z == "0") {
-            displayData();
-
-        } else {
-            listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-                @Override
-                public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                    EditText textView = (EditText) view.findViewById(R.id.textview_id);
-                    final String test = textView.getText().toString();
-                    copytoClip(test);
-                    return true;
-                }
-            });
-
-            sqLiteDatabase = database.getReadableDatabase();
-            Cursor cursor = sqLiteDatabase.rawQuery("SELECT * FROM info WHERE type='" + z + "'", null);
-            Log.d("pod", cursor.toString());
-
-
-            if (cursor.getCount() > 0) {
-                listView.setVisibility(View.VISIBLE);
-                empty.setVisibility(view.GONE);
-                id = new int[cursor.getCount()];
-                color = new String[cursor.getCount()];
-                text = new String[cursor.getCount()];
-                date = new String[cursor.getCount()];
-
-                int i = 0;
-                while (cursor.moveToNext()) {
-                    id[i] = cursor.getInt(0);
-                    color[i] = cursor.getString(1);
-                    text[i] = cursor.getString(3);
-                    date[i] = cursor.getString(4);
-                    i++;
-                }
-                CustomAdapter adapter = new CustomAdapter();
-                listView.setAdapter(adapter);
-
-                empty.setVisibility(View.GONE);
-                listView.setVisibility(View.VISIBLE);
-
-            } else if (cursor.getCount() == 0) {
-                empty.setVisibility(View.VISIBLE);
-                listView.setVisibility(View.GONE);
-                Toast.makeText(getContext(), "Empty", Toast.LENGTH_LONG).show();
-            }
-        }
-    }
-
-    public void displayData() {
 
         listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
@@ -159,14 +119,24 @@ public class History extends Fragment {
                 TextView textView = (TextView) view.findViewById(R.id.textview_id);
                 final String test = textView.getText().toString();
                 copytoClip(test);
+
+
                 return true;
             }
         });
 
         sqLiteDatabase = database.getReadableDatabase();
-        Cursor cursor = sqLiteDatabase.rawQuery("SELECT * FROM info ORDER BY id DESC", null);
+        Cursor cursor;
+        if (z.equals("0"))
+            cursor = sqLiteDatabase.rawQuery("SELECT * FROM info ORDER BY id DESC", null);
+        else
+            cursor = sqLiteDatabase.rawQuery("SELECT * FROM info WHERE type='" + z + "'" + " ORDER BY id DESC", null);
+        Log.d("pod", cursor.toString());
+
 
         if (cursor.getCount() > 0) {
+            listView.setVisibility(View.VISIBLE);
+            empty.setVisibility(view.GONE);
             id = new int[cursor.getCount()];
             color = new String[cursor.getCount()];
             text = new String[cursor.getCount()];
@@ -182,6 +152,7 @@ public class History extends Fragment {
             }
             CustomAdapter adapter = new CustomAdapter();
             listView.setAdapter(adapter);
+
             empty.setVisibility(View.GONE);
             listView.setVisibility(View.VISIBLE);
 
@@ -191,6 +162,47 @@ public class History extends Fragment {
             Toast.makeText(getContext(), "Empty", Toast.LENGTH_LONG).show();
         }
     }
+
+//    public void displayData() {
+//
+//        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+//            @Override
+//            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+//                TextView textView = (TextView) view.findViewById(R.id.textview_id);
+//                final String test = textView.getText().toString();
+//                copytoClip(test);
+//                return true;
+//            }
+//        });
+//
+//        sqLiteDatabase = database.getReadableDatabase();
+//        Cursor cursor = sqLiteDatabase.rawQuery("SELECT * FROM info ORDER BY id DESC", null);
+//
+//        if (cursor.getCount() > 0) {
+//            id = new int[cursor.getCount()];
+//            color = new String[cursor.getCount()];
+//            text = new String[cursor.getCount()];
+//            date = new String[cursor.getCount()];
+//
+//            int i = 0;
+//            while (cursor.moveToNext()) {
+//                id[i] = cursor.getInt(0);
+//                color[i] = cursor.getString(1);
+//                text[i] = cursor.getString(3);
+//                date[i] = cursor.getString(4);
+//                i++;
+//            }
+//            CustomAdapter adapter = new CustomAdapter();
+//            listView.setAdapter(adapter);
+//            empty.setVisibility(View.GONE);
+//            listView.setVisibility(View.VISIBLE);
+//
+//        } else if (cursor.getCount() == 0) {
+//            empty.setVisibility(View.VISIBLE);
+//            listView.setVisibility(View.GONE);
+//            Toast.makeText(getContext(), "Empty", Toast.LENGTH_LONG).show();
+//        }
+//    }
 
     private class CustomAdapter extends BaseAdapter {
 
@@ -213,10 +225,8 @@ public class History extends Fragment {
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
             ImageView delete, edit, share, translate;
-            LinearLayout cardView;
             TextView textView1, textView;
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.sample_view, parent, false);
-            cardView = convertView.findViewById(R.id.cardview);
             delete = convertView.findViewById(R.id.delete);
             translate = convertView.findViewById(R.id.gtranslate);
             edit = convertView.findViewById(R.id.edit);
@@ -231,12 +241,9 @@ public class History extends Fragment {
             translate.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-//                    String shareBody = text[position];
-//                    Bundle bundle = new Bundle();
-//                    bundle.putString("datas", shareBody);
-//                    JustSay justSay = new JustSay();
-//                    justSay.setArguments(bundle);
-//                    getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.container, justSay).commit();
+                    String shareBody = text[position];
+                    justSay.setHistoryText(shareBody);
+                    getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, justSay).commit();
 
                 }
             });
@@ -244,11 +251,43 @@ public class History extends Fragment {
             edit.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent intent = new Intent(getActivity(), UpdateData.class);
-                    intent.putExtra("id", id[position]);
-                    intent.putExtra("text", text[position]);
-                    intent.putExtra("date", date[position]);
-                    startActivity(intent);
+
+                    listView.setVisibility(View.GONE);
+                    showlinearLayout.setVisibility(View.VISIBLE);
+                    showDate.setText(date[position]);
+                    showData.setText(text[position]);
+                    editDonePosition = position;
+                }
+            });
+
+            editDone.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    new AlertDialog.Builder(getActivity())
+                            .setMessage("Are you sure you want to Update?")
+                            .setNegativeButton(android.R.string.no, null)
+                            .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+
+                                public void onClick(DialogInterface arg0, int arg1) {
+
+                                    ContentValues contentValues = new ContentValues();
+                                    contentValues.put(Database.DATE, showDate.getText().toString());
+                                    contentValues.put(Database.DATA, showData.getText().toString());
+                                    sqLiteDatabase = database.getWritableDatabase();
+
+                                    long recid = sqLiteDatabase.update("info", contentValues, "id=?", new String[]{String.valueOf(id[editDonePosition])});
+
+                                    if (recid != -1) {
+                                        Toast.makeText(getActivity(), "Data update successfully", Toast.LENGTH_SHORT).show();
+                                    } else {
+                                        Toast.makeText(getActivity(), "Something wrong try again", Toast.LENGTH_SHORT).show();
+                                    }
+                                    showlinearLayout.setVisibility(View.GONE);
+                                    listView.setVisibility(View.VISIBLE);
+                                    displayData("0");
+                                }
+                            }).create().show();
                 }
             });
 
@@ -266,7 +305,7 @@ public class History extends Fragment {
                                     if (recd != 1) {
                                         Toast.makeText(getContext(), "Record deleted successfully", Toast.LENGTH_SHORT).show();
                                     }
-                                    displayData();
+                                    displayData("0");
                                 }
                             }).create().show();
                 }

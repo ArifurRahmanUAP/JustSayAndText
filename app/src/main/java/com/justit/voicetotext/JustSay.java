@@ -79,8 +79,13 @@ public class JustSay extends Fragment {
             R.drawable.arabic, R.drawable.korean, R.drawable.japanese, R.drawable.catalan, R.drawable.spanish, R.drawable.swedish, R.drawable.chinese,
             R.drawable.danish, R.drawable.german, R.drawable.dutch, R.drawable.greek, R.drawable.french, R.drawable.indonesian, R.drawable.italian};
 
+    String historyText;
     public JustSay() {
         // Required empty public constructor
+    }
+
+    public void setHistoryText(String historyText){
+        this.historyText = historyText;
     }
 
     @Override
@@ -116,14 +121,8 @@ public class JustSay extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_justsay, container, false);
 
-//        String localeCountryCode= getActivity().getResources().getConfiguration().locale.getCountry();
         TelephonyManager telephoneManager = (TelephonyManager) getActivity().getSystemService(Context.TELEPHONY_SERVICE);
         String countryCode = telephoneManager.getNetworkCountryIso();
-
-
-//        Bundle bundle = this.getArguments();
-//        String datas = bundle.getString("datas");
-//        sourceEdt.setText(datas);
 
         MobileAds.initialize(requireContext());
 
@@ -141,7 +140,8 @@ public class JustSay extends Fragment {
         AdRequest adRequest = new AdRequest.Builder().build();
         AdView adView = new AdView(getActivity());
         adView.setAdSize(AdSize.BANNER);
-        adView.setAdUnitId("ca-app-pub-4459566286777302/7966254460");
+        adView.setAdUnitId("ca-app-pub-3940256099942544/6300978111");
+//        adView.setAdUnitId("ca-app-pub-4459566286777302/7966254460");
         mAdView = view.findViewById(R.id.adView);
         mAdView.loadAd(adRequest);
 
@@ -153,6 +153,10 @@ public class JustSay extends Fragment {
         checkBoxId = view.findViewById(R.id.checkBoxId);
         translateBtn = view.findViewById(R.id.idBtnTranslate);
         translateTv = view.findViewById(R.id.idEdttranslated);
+
+        if (historyText != null){
+            sourceEdt.setText(historyText);
+        }
 
         customAdapter = new CustomAdapter(getActivity(), languages, flags);
         fromSpinner.setAdapter(customAdapter);
@@ -286,7 +290,8 @@ public class JustSay extends Fragment {
             }
         });
 
-        InterstitialAd.load(getActivity(), "ca-app-pub-4459566286777302/2399533752", adRequest,
+//        InterstitialAd.load(getActivity(), "ca-app-pub-4459566286777302/2399533752", adRequest,
+        InterstitialAd.load(getActivity(), "ca-app-pub-3940256099942544/1033173712", adRequest,
                 new InterstitialAdLoadCallback() {
                     @Override
                     public void onAdLoaded(@NonNull InterstitialAd interstitialAd) {

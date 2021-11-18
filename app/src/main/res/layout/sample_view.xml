@@ -55,26 +55,26 @@
                         android:id="@+id/edit"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="5dp"
+                        android:layout_marginStart="7dp"
                         android:src="@drawable/edit" />
 
                     <ImageView
                         android:id="@+id/delete"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="5dp"
+                        android:layout_marginStart="7dp"
                         android:src="@drawable/delete" />
 
                     <ImageView
                         android:id="@+id/share"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="5dp"
+                        android:layout_marginStart="7dp"
                         android:src="@drawable/share" />
                 </LinearLayout>
             </LinearLayout>
 
-            <EditText
+            <TextView
                 android:id="@+id/textview_id"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
