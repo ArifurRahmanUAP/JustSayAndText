@@ -34,6 +34,8 @@ import com.google.android.gms.ads.AdSize;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.LoadAdError;
 import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.initialization.InitializationStatus;
+import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 import com.google.android.gms.ads.interstitial.InterstitialAd;
 import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -129,20 +131,23 @@ public class JustSay extends Fragment {
         if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.RECORD_AUDIO}, 1);
         }
-
-        //        Share
         sourseTexeShare = view.findViewById(R.id.sourseTexeShare);
         translatedTexeShare = view.findViewById(R.id.translatedTexeShare);
+        mAdView = view.findViewById(R.id.adView);
 
         //ADDVIEW
-
         MobileAds.initialize(getActivity());
         AdRequest adRequest = new AdRequest.Builder().build();
+
         AdView adView = new AdView(getActivity());
         adView.setAdSize(AdSize.BANNER);
         adView.setAdUnitId("ca-app-pub-3940256099942544/6300978111");
-//        adView.setAdUnitId("ca-app-pub-4459566286777302/7966254460");
-        mAdView = view.findViewById(R.id.adView);
+        MobileAds.initialize(getActivity(), new OnInitializationCompleteListener() {
+            @Override
+            public void onInitializationComplete(InitializationStatus initializationStatus) {
+            }
+        });
+
         mAdView.loadAd(adRequest);
 
         swapButton = view.findViewById(R.id.swapButton);
@@ -242,12 +247,6 @@ public class JustSay extends Fragment {
             @Override
             public void onClick(View v) {
 
-//                if (mInterstitialAd != null) {
-//                    mInterstitialAd.show(getActivity());
-//                } else {
-//                    Log.d("TAG", "The interstitial ad wasn't ready yet.");
-//                }
-
                 translateTv.setText("");
                 if (sourceEdt.getText().toString().isEmpty()) {
 
@@ -278,6 +277,11 @@ public class JustSay extends Fragment {
                     e.printStackTrace();
                     Toast.makeText(getActivity(), "" + e.getMessage(), Toast.LENGTH_SHORT).show();
                 }
+
+                if (mInterstitialAd != null) {
+                    mInterstitialAd.show(getActivity());
+                } else {
+                }
             }
         });
 
@@ -295,14 +299,11 @@ public class JustSay extends Fragment {
                 new InterstitialAdLoadCallback() {
                     @Override
                     public void onAdLoaded(@NonNull InterstitialAd interstitialAd) {
-                        // The mInterstitialAd reference will be null until
-                        // an ad is loaded.
                         mInterstitialAd = interstitialAd;
                     }
 
                     @Override
                     public void onAdFailedToLoad(@NonNull LoadAdError loadAdError) {
-                        // Handle the error
                         mInterstitialAd = null;
                     }
                 });

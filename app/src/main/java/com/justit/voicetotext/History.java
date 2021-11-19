@@ -32,6 +32,13 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdSize;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.initialization.InitializationStatus;
+import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
+
 public class History extends Fragment {
     View view;
     ListView listView;
@@ -48,6 +55,7 @@ public class History extends Fragment {
     EditText showData;
     TextView showDate;
     JustSay justSay;
+    public AdView mAdView;
 
     String[] history = {"Filter History by Category", "Voice to Text", "Translated Text", "Image to Text"};
 
@@ -70,10 +78,25 @@ public class History extends Fragment {
         showData = view.findViewById(R.id.showData);
         showDate = view.findViewById(R.id.showDate);
         editDone = view.findViewById(R.id.editDone);
+        mAdView = view.findViewById(R.id.adViewHistory);
+
 
         ArrayAdapter fromAdapter = new ArrayAdapter(getActivity(), R.layout.spinner_item, history);
         fromAdapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
         searchSpinner.setAdapter(fromAdapter);
+
+        MobileAds.initialize(getActivity());
+        AdRequest adRequest = new AdRequest.Builder().build();
+
+        AdView adView = new AdView(getActivity());
+        adView.setAdSize(AdSize.BANNER);
+        adView.setAdUnitId("ca-app-pub-3940256099942544/6300978111");
+        MobileAds.initialize(getActivity(), new OnInitializationCompleteListener() {
+            @Override
+            public void onInitializationComplete(InitializationStatus initializationStatus) {
+            }
+        });
+        mAdView.loadAd(adRequest);
 
         searchSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override

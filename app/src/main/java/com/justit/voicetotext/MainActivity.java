@@ -5,16 +5,12 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
-import android.graphics.PorterDuff;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.SparseArray;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.LinearInterpolator;
-import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
@@ -37,7 +33,7 @@ import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
     BottomNavigationView bottomNav;
-    ImageView appShare;
+    ImageView appInfo;
     Bitmap bitmap;
 
     @Override
@@ -47,32 +43,18 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-//        getSupportFragmentManager().beginTransaction().add(R.id.container, new History()).commit();
-
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getSupportActionBar().setDisplayShowCustomEnabled(true);
         getSupportActionBar().setCustomView(R.layout.toolbar);
         getSupportActionBar().setElevation(0);
         View view = getSupportActionBar().getCustomView();
-        appShare = view.findViewById(R.id.appShare);
-        appShare = findViewById(R.id.appShare);
+        appInfo = view.findViewById(R.id.appinfo);
 
-        appShare.setOnClickListener(new View.OnClickListener() {
+        appInfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                try {
-                    Intent shareIntent = new Intent(Intent.ACTION_SEND);
-                    shareIntent.setType("text/plain");
-                    shareIntent.putExtra(Intent.EXTRA_SUBJECT, getPackageName());
-                    String shareMessage = "I am using this application for voice to text conversion, also for translation to other languages. " +
-                            "My fascination is that I can share the texts in social media and to messaging app like Whatsapp, Messenger, Imo etc." +
-                            " It would be helpful for you.\n";
-                    shareMessage = shareMessage + "https://play.google.com/store/apps/details?id=com.justit.voicetotext";
-                    shareIntent.putExtra(Intent.EXTRA_TEXT, shareMessage);
-                    startActivity(Intent.createChooser(shareIntent, "choose one"));
-                } catch (Exception e) {
-                    //e.toString();
-                }
+                Intent intent = new Intent(MainActivity.this, About.class);
+                startActivity(intent);
             }
         });
         bottomNav = findViewById(R.id.bottom_navigation);

@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F1EDED"
+    android:orientation="vertical"
+    android:padding="10dp"
+    xmlns:ads="http://schemas.android.com/apk/res-auto"
+    tools:context=".About">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/button_background"
+        android:backgroundTint="#838485"
+        android:orientation="vertical"
+        android:text="@string/app_name">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="10dp"
+            android:text="@string/application_name"
+            android:textColor="@color/black"
+            android:textSize="22sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="25dp"
+            android:layout_marginStart="10dp"
+            android:text="@string/app_name"
+            android:textColor="#0C0C0C"
+            android:textSize="16sp"
+            android:layout_marginBottom="5dp"/>
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/app_developer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/button_background"
+        android:backgroundTint="#838485"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:text="@string/developer"
+            android:textColor="@color/black"
+            android:textSize="22sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:text="@string/just_it"
+            android:textColor="#0C0C0C"
+            android:textSize="16sp"
+            android:layout_marginBottom="5dp"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/app_share"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/button_background"
+        android:backgroundTint="#838485"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:text="@string/tell_your_friends"
+            android:textColor="@color/black"
+            android:textSize="22sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:text="@string/share_this_app_to_your_friends_it_would_be_helpful_for_them"
+            android:textColor="#0C0C0C"
+            android:textSize="16sp"
+            android:layout_marginBottom="5dp" />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/app_review"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/button_background"
+        android:backgroundTint="#838485"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:text="@string/rate_amp_review"
+            android:textColor="@color/black"
+            android:textSize="22sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:text="@string/if_you_are_free_then_take_a_time_and_give_your_feedback_about_this_app"
+            android:textColor="#0C0C0C"
+            android:textSize="16sp"
+            android:layout_marginBottom="5dp"/>
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/others_apps"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/button_background"
+        android:backgroundTint="#838485"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:text="@string/visit_our_others_apps"
+            android:textColor="@color/black"
+            android:textSize="22sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:text="@string/you_can_visit_our_others_apps_here"
+            android:textColor="#0C0C0C"
+            android:textSize="16sp"
+            android:layout_marginBottom="5dp" />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/instad"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/button_background"
+        android:backgroundTint="#838485"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:text="@string/help_us_to_improve"
+            android:textColor="@color/black"
+            android:textSize="22sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:text="@string/help_us_to_improve_by_watching_an_ad"
+            android:textColor="#0C0C0C"
+            android:textSize="16sp"
+            android:layout_marginBottom="5dp" />
+    </LinearLayout>
+
+    <com.google.android.gms.ads.AdView
+        android:layout_marginTop="10dp"
+        android:id="@+id/adViewAbout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        ads:adSize="BANNER"
+        ads:adUnitId="ca-app-pub-3940256099942544/6300978111">
+    </com.google.android.gms.ads.AdView>
+
+
+</LinearLayout>

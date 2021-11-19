@@ -10,4 +10,15 @@
     <string name="history">History</string>
     <string name="just_say">Just Say</string>
     <string name="image_to_text">Image to Text</string>
+    <string name="application_name">Application Name</string>
+    <string name="visit_our_others_apps">Visit Our Others Apps</string>
+    <string name="developer">Developer</string>
+    <string name="help_us_to_improve">Help Us To Improve</string>
+    <string name="just_it">Just IT</string>
+    <string name="share_this_app_to_your_friends_it_would_be_helpful_for_them">Share this app to your friends, It Would be helpful for them.</string>
+    <string name="tell_your_friends">Tell your Friends</string>
+    <string name="rate_amp_review"><![CDATA[Rate & Review]]></string>
+    <string name="if_you_are_free_then_take_a_time_and_give_your_feedback_about_this_app">If you are free then take a time and give your feedback about this app.</string>
+    <string name="you_can_visit_our_others_apps_here">You can visit our others apps here.</string>
+    <string name="help_us_to_improve_by_watching_an_ad">Help us to improve by watching an ad.</string>
 </resources>
